@@ -1,0 +1,55 @@
+.header {
+  padding: 2rem 0;
+  text-align: center;
+  border-bottom: 1px solid rgba(200, 230, 201, 0.5);
+  background: linear-gradient(135deg, #FFFDF7 0%, #f0f7f1 100%);
+}
+
+.logo {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #4E6E5D;
+  margin: 0;
+  letter-spacing: -0.5px;
+}
+
+.tagline {
+  font-size: 1rem;
+  color: #a0998e;
+  margin: 0.5rem 0 0 0;
+  font-weight: 400;
+  letter-spacing: 1px;
+}
+
+.main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+}
+
+.sectionTitle {
+  text-align: center;
+  font-size: 1.5rem;
+  color: #4E6E5D;
+  margin: 0 0 2.5rem 0;
+  position: relative;
+}
+
+.sectionTitle::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, #81C784, #C8E6C9);
+  margin: 0.75rem auto 0;
+  border-radius: 2px;
+}
+
+.footer {
+  text-align: center;
+  padding: 2rem;
+  color: #a0998e;
+  font-size: 0.85rem;
+  border-top: 1px solid rgba(200, 230, 201, 0.3);
+  margin-top: 4rem;
+}
