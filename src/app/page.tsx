@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma";
 import ProductGrid from "@/components/ProductGrid";
 import styles from "./page.module.css";
 import { Product } from "@prisma/client";
+import Image from "next/image";
 
 const WHATSAPP_NUMBER = process.env.WHATSAPP_NUMBER || "5500000000000";
 
@@ -19,8 +20,19 @@ export default async function Home() {
   return (
     <>
       <header className={styles.header}>
-        <h1 className={styles.logo}>Catálogo</h1>
-        <p className={styles.tagline}>Nossos Produtos</p>
+        <div className={styles.logoContainer}>
+          <Image 
+            src="/logo.png" 
+            alt="Logo" 
+            width={80} 
+            height={80} 
+            className={styles.headerLogo}
+          />
+          <div>
+            <h1 className={styles.logo}>Catálogo de Produtos</h1>
+            <p className={styles.tagline}>Nossos Produtos Amigurumi</p>
+          </div>
+        </div>
       </header>
 
       <main className={styles.main}>
