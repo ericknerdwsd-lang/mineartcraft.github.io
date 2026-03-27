@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { prisma } from "@/lib/prisma";
 import ProductGrid from "@/components/ProductGrid";
 import styles from "./page.module.css";
