@@ -15,6 +15,7 @@ model Product {
   description String?
   price       Float
   imageUrl    String?
+  category    String   @default("amigurumis")
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }

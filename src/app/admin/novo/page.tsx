@@ -15,6 +15,7 @@ export default function NovoProduct() {
   const [imageTab, setImageTab] = useState<"upload" | "url">("upload");
   const [uploading, setUploading] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [category, setCategory] = useState("amigurumis");
   const [error, setError] = useState("");
   const fileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
@@ -62,6 +63,7 @@ export default function NovoProduct() {
           description,
           price,
           imageUrl: imageUrl || null,
+          category,
         }),
       });
 
@@ -127,6 +129,20 @@ export default function NovoProduct() {
                 required
               />
             </div>
+          </div>
+
+          <div className={styles.field}>
+            <label className={styles.label}>Categoria</label>
+            <select
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              className={styles.input}
+              required
+            >
+              <option value="amigurumis">Amigurumis</option>
+              <option value="roupas">Roupas</option>
+              <option value="bolsas_acessorios">Bolsas e Acessórios</option>
+            </select>
           </div>
 
           <div className={styles.field}>

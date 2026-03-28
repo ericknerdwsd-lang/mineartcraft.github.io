@@ -12,6 +12,7 @@ export default function EditarProduct() {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [imageUrl, setImageUrl] = useState("");
+  const [category, setCategory] = useState("amigurumis");
   const [imageTab, setImageTab] = useState<"upload" | "url">("url");
   const [uploading, setUploading] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -31,6 +32,7 @@ export default function EditarProduct() {
           setDescription(product.description || "");
           setPrice(String(product.price));
           setImageUrl(product.imageUrl || "");
+          setCategory(product.category || "amigurumis");
         } else {
           setError("Produto não encontrado.");
         }
@@ -86,6 +88,7 @@ export default function EditarProduct() {
           description,
           price,
           imageUrl: imageUrl || null,
+          category,
         }),
       });
 
@@ -161,6 +164,20 @@ export default function EditarProduct() {
                 required
               />
             </div>
+          </div>
+
+          <div className={styles.field}>
+            <label className={styles.label}>Categoria</label>
+            <select
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              className={styles.input}
+              required
+            >
+              <option value="amigurumis">Amigurumis</option>
+              <option value="roupas">Roupas</option>
+              <option value="bolsas_acessorios">Bolsas e Acessórios</option>
+            </select>
           </div>
 
           <div className={styles.field}>

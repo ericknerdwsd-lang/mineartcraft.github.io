@@ -10,6 +10,7 @@ interface Product {
   description: string | null;
   price: number;
   imageUrl: string | null;
+  category: string;
 }
 
 interface ProductModalProps {
