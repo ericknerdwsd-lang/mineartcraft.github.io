@@ -19,7 +19,7 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { name, description, price, imageUrl, category } = body;
+    const { name, description, price, images, category } = body;
 
     if (!name || price === undefined) {
       return NextResponse.json(
@@ -33,13 +33,14 @@ export async function POST(request: Request) {
         name,
         description: description || "",
         price: parseFloat(price),
-        imageUrl: imageUrl || null,
+        images: images || [],
         category: category || "amigurumis",
       },
     });
 
     return NextResponse.json(product, { status: 201 });
   } catch (error) {
+    console.error("Erro ao criar produto:", error);
     return NextResponse.json(
       { error: "Erro ao criar produto" },
       { status: 500 }

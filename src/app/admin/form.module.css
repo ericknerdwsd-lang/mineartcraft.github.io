@@ -233,6 +233,87 @@
   font-size: 0.9rem;
 }
 
+/* Multi-image Gallery in Admin */
+.imagesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.imageSlot {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 2px solid #e8e4dc;
+  background: #fafaf6;
+  transition: all 0.2s ease;
+}
+
+.imageSlotEmpty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: #FAFAF6;
+  border: 2px dashed #C8E6C9;
+  color: #81C784;
+}
+
+.imageSlotEmpty:hover {
+  background: #f0f7f1;
+  border-color: #81C784;
+}
+
+.slotIcon {
+  margin-bottom: 4px;
+}
+
+.slotText {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.removeSlot {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2;
+  transition: all 0.2s ease;
+}
+
+.removeSlot:hover {
+  background: #e74c3c;
+}
+
+.mainSlotBadge {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(78, 110, 93, 0.85);
+  color: white;
+  font-size: 0.6rem;
+  padding: 3px 0;
+  text-align: center;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
 /* Submit */
 .submitButton {
   padding: 16px;

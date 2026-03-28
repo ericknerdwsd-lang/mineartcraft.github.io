@@ -33,7 +33,7 @@ export async function PUT(
   try {
     const { id } = await params;
     const body = await request.json();
-    const { name, description, price, imageUrl, category } = body;
+    const { name, description, price, images, category } = body;
 
     const product = await prisma.product.update({
       where: { id },
@@ -41,13 +41,14 @@ export async function PUT(
         name,
         description,
         price: parseFloat(price),
-        imageUrl,
+        images: images || [],
         category,
       },
     });
 
     return NextResponse.json(product);
   } catch (error) {
+    console.error("Erro ao atualizar produto:", error);
     return NextResponse.json(
       { error: "Erro ao atualizar produto" },
       { status: 500 }

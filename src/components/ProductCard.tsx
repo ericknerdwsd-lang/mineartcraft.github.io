@@ -8,7 +8,7 @@ interface Product {
   name: string;
   description: string | null;
   price: number;
-  imageUrl: string | null;
+  images: string[];
   category: string;
 }
 
@@ -23,12 +23,14 @@ export default function ProductCard({ product, onClick }: ProductCardProps) {
     currency: "BRL",
   }).format(product.price);
 
+  const mainImage = product.images?.[0];
+
   return (
     <div className={styles.card} onClick={() => onClick(product)}>
       <div className={styles.imageWrapper}>
-        {product.imageUrl ? (
+        {mainImage ? (
           <Image
-            src={product.imageUrl}
+            src={mainImage}
             alt={product.name}
             fill
             className={styles.image}

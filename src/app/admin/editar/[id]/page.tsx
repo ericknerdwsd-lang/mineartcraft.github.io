@@ -11,9 +11,10 @@ export default function EditarProduct() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
+  const [images, setImages] = useState<string[]>([]);
   const [category, setCategory] = useState("amigurumis");
-  const [imageTab, setImageTab] = useState<"upload" | "url">("url");
+  const [imageTab, setImageTab] = useState<"upload" | "url">("upload");
+  const [urlInput, setUrlInput] = useState("");
   const [uploading, setUploading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -31,12 +32,15 @@ export default function EditarProduct() {
           setName(product.name);
           setDescription(product.description || "");
           setPrice(String(product.price));
-          setImageUrl(product.imageUrl || "");
+          // Migrate single imageUrl to images array if needed
+          const productImages = product.images || (product.imageUrl ? [product.imageUrl] : []);
+          setImages(productImages);
           setCategory(product.category || "amigurumis");
         } else {
           setError("Produto não encontrado.");
         }
-      } catch {
+      } catch (error) {
+        console.error("Erro ao carregar:", error);
         setError("Erro ao carregar produto.");
       } finally {
         setLoading(false);
@@ -48,6 +52,11 @@ export default function EditarProduct() {
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+
+    if (images.length >= 4) {
+      setError("Limite de 4 fotos atingido.");
+      return;
+    }
 
     setUploading(true);
     setError("");
@@ -63,7 +72,7 @@ export default function EditarProduct() {
 
       if (res.ok) {
         const data = await res.json();
-        setImageUrl(data.url);
+        setImages([...images, data.url]);
       } else {
         setError("Erro ao fazer upload da imagem.");
       }
@@ -71,7 +80,24 @@ export default function EditarProduct() {
       setError("Erro ao conectar com o servidor.");
     } finally {
       setUploading(false);
+      if (fileInputRef.current) fileInputRef.current.value = "";
     }
+  };
+
+  const addUrlImage = () => {
+    if (!urlInput) return;
+    if (images.length >= 4) {
+      setError("Limite de 4 fotos atingido.");
+      return;
+    }
+    setImages([...images, urlInput]);
+    setUrlInput("");
+    setError("");
+  };
+
+  const removeImage = (index: number) => {
+    setImages(images.filter((_, i) => i !== index));
+    setError("");
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -87,7 +113,7 @@ export default function EditarProduct() {
           name,
           description,
           price,
-          imageUrl: imageUrl || null,
+          images,
           category,
         }),
       });
@@ -133,7 +159,7 @@ export default function EditarProduct() {
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="Ex: Camiseta Premium"
+              placeholder="Ex: Ursinho de Crochê"
               className={styles.input}
               required
             />
@@ -181,7 +207,7 @@ export default function EditarProduct() {
           </div>
 
           <div className={styles.field}>
-            <label className={styles.label}>Imagem</label>
+            <label className={styles.label}>Imagens (Máx. 4)</label>
             <div className={styles.imageSection}>
               <div className={styles.imageTabs}>
                 <button
@@ -201,33 +227,43 @@ export default function EditarProduct() {
               </div>
 
               {imageTab === "upload" ? (
-                <>
-                  {!imageUrl && !uploading && (
-                    <div
-                      className={styles.uploadArea}
-                      onClick={() => fileInputRef.current?.click()}
-                    >
-                      <Upload size={32} className={styles.uploadIcon} />
-                      <p className={styles.uploadText}>Clique para enviar uma imagem</p>
-                      <p className={styles.uploadHint}>PNG, JPG ou WebP (máx. 4.5MB)</p>
-                    </div>
-                  )}
+                <div 
+                  className={`${styles.uploadArea} ${images.length >= 4 ? styles.uploadDisabled : ""}`}
+                  onClick={() => images.length < 4 && fileInputRef.current?.click()}
+                >
+                  <Upload size={32} className={styles.uploadIcon} />
+                  <p className={styles.uploadText}>
+                    {images.length >= 4 ? "Limite atingido" : "Clique para enviar"}
+                  </p>
+                  <p className={styles.uploadHint}>{images.length}/4 fotos</p>
                   <input
                     ref={fileInputRef}
                     type="file"
                     accept="image/*"
                     onChange={handleFileUpload}
                     className={styles.hiddenInput}
+                    disabled={images.length >= 4}
                   />
-                </>
+                </div>
               ) : (
-                <input
-                  type="url"
-                  value={imageUrl}
-                  onChange={(e) => setImageUrl(e.target.value)}
-                  placeholder="https://exemplo.com/imagem.jpg"
-                  className={styles.input}
-                />
+                <div style={{ display: "flex", gap: "8.1px" }}>
+                  <input
+                    type="url"
+                    value={urlInput}
+                    onChange={(e) => setUrlInput(e.target.value)}
+                    placeholder="https://exemplo.com/imagem.jpg"
+                    className={styles.input}
+                    style={{ flex: 1 }}
+                  />
+                  <button 
+                    type="button" 
+                    onClick={addUrlImage}
+                    className={styles.addButton}
+                    disabled={images.length >= 4}
+                  >
+                    Adicionar
+                  </button>
+                </div>
               )}
 
               {uploading && (
@@ -236,24 +272,36 @@ export default function EditarProduct() {
                 </div>
               )}
 
-              {imageUrl && (
-                <div className={styles.preview}>
-                  <Image
-                    src={imageUrl}
-                    alt="Preview"
-                    fill
-                    className={styles.previewImage}
-                    sizes="700px"
-                  />
-                  <button
-                    type="button"
-                    className={styles.removePreview}
-                    onClick={() => setImageUrl("")}
-                  >
-                    <X size={16} />
-                  </button>
-                </div>
-              )}
+              <div className={styles.imagesGrid}>
+                {images.map((url, index) => (
+                  <div key={index} className={styles.imageSlot}>
+                    <Image
+                      src={url}
+                      alt={`Preview ${index + 1}`}
+                      fill
+                      className={styles.previewImage}
+                      sizes="200px"
+                    />
+                    <button
+                      type="button"
+                      className={styles.removeSlot}
+                      onClick={() => removeImage(index)}
+                    >
+                      <X size={14} />
+                    </button>
+                    {index === 0 && (
+                      <div className={styles.mainSlotBadge}>Principal</div>
+                    )}
+                  </div>
+                ))}
+                
+                {Array.from({ length: Math.max(0, 4 - images.length) }).map((_, i) => (
+                  <div key={`empty-${i}`} className={`${styles.imageSlot} ${styles.imageSlotEmpty}`} onClick={() => imageTab === "upload" && fileInputRef.current?.click()}>
+                    <Upload size={20} className={styles.slotIcon} />
+                    <span className={styles.slotText}>Vazio</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 
@@ -262,7 +310,7 @@ export default function EditarProduct() {
           <button
             type="submit"
             className={styles.submitButton}
-            disabled={saving}
+            disabled={saving || images.length === 0}
           >
             {saving ? "Salvando..." : "Atualizar Produto"}
           </button>

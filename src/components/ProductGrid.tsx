@@ -10,7 +10,7 @@ interface Product {
   name: string;
   description: string | null;
   price: number;
-  imageUrl: string | null;
+  images: string[];
   category: string;
 }
 

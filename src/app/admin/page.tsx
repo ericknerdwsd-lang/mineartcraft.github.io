@@ -14,7 +14,7 @@ interface Product {
   name: string;
   description: string | null;
   price: number;
-  imageUrl: string | null;
+  images: string[];
   createdAt: string;
 }
 
@@ -128,9 +128,9 @@ export default function AdminDashboard() {
               <div key={product.id} className={styles.tableRow}>
                 <div className={styles.colImage}>
                   <div className={styles.thumbnail}>
-                    {product.imageUrl ? (
+                    {product.images && product.images.length > 0 ? (
                       <Image
-                        src={product.imageUrl}
+                        src={product.images[0]}
                         alt={product.name}
                         fill
                         className={styles.thumbImage}

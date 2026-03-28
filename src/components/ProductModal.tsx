@@ -1,6 +1,7 @@
 "use client";
 
-import { X } from "lucide-react";
+import { useState } from "react";
+import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import styles from "./ProductModal.module.css";
 
@@ -9,7 +10,7 @@ interface Product {
   name: string;
   description: string | null;
   price: number;
-  imageUrl: string | null;
+  images: string[];
   category: string;
 }
 
@@ -24,10 +25,24 @@ export default function ProductModal({
   onClose,
   whatsappNumber,
 }: ProductModalProps) {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const formattedPrice = new Intl.NumberFormat("pt-BR", {
     style: "currency",
     currency: "BRL",
   }).format(product.price);
+
+  const images = product.images || [];
+  const currentImage = images[currentImageIndex];
+
+  const nextImage = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setCurrentImageIndex((prev) => (prev + 1) % images.length);
+  };
+
+  const prevImage = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
+  };
 
   const whatsappMessage = encodeURIComponent(
     `Olá! Tenho interesse no produto: *${product.name}* (${formattedPrice}). Poderia me dar mais informações?`
@@ -43,17 +58,60 @@ export default function ProductModal({
 
         <div className={styles.content}>
           <div className={styles.imageContainer}>
-            {product.imageUrl ? (
-              <Image
-                src={product.imageUrl}
-                alt={product.name}
-                fill
-                className={styles.image}
-                sizes="(max-width: 768px) 100vw, 50vw"
-              />
-            ) : (
-              <div className={styles.placeholder}>
-                <span>Sem imagem</span>
+            <div className={styles.mainImageWrapper}>
+              {currentImage ? (
+                <>
+                  <Image
+                    src={currentImage}
+                    alt={product.name}
+                    fill
+                    className={styles.image}
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    priority
+                  />
+                  {images.length > 1 && (
+                    <>
+                      <button 
+                        className={`${styles.navButton} ${styles.prevButton}`} 
+                        onClick={prevImage}
+                        aria-label="Foto anterior"
+                      >
+                        <ChevronLeft size={24} />
+                      </button>
+                      <button 
+                        className={`${styles.navButton} ${styles.nextButton}`} 
+                        onClick={nextImage}
+                        aria-label="Próxima foto"
+                      >
+                        <ChevronRight size={24} />
+                      </button>
+                    </>
+                  )}
+                </>
+              ) : (
+                <div className={styles.placeholder}>
+                  <span>Sem imagem</span>
+                </div>
+              )}
+            </div>
+
+            {images.length > 1 && (
+              <div className={styles.gallery}>
+                {images.map((img, index) => (
+                  <div 
+                    key={index} 
+                    className={`${styles.thumbnail} ${index === currentImageIndex ? styles.thumbnailActive : ""}`}
+                    onClick={() => setCurrentImageIndex(index)}
+                  >
+                    <Image
+                      src={img}
+                      alt={`${product.name} - angular ${index + 1}`}
+                      fill
+                      style={{ objectFit: 'cover' }}
+                      sizes="60px"
+                    />
+                  </div>
+                ))}
               </div>
             )}
           </div>
