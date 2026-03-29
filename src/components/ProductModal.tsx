@@ -39,16 +39,18 @@ export default function ProductModal({
 
   const nextImage = (e: React.MouseEvent) => {
     e.stopPropagation();
+    if (currentImageIndex >= images.length - 1) return;
     setPrevImageIndex(currentImageIndex);
     setDirection("next");
-    setCurrentImageIndex((prev) => (prev + 1) % images.length);
+    setCurrentImageIndex((prev) => prev + 1);
   };
 
   const prevImage = (e: React.MouseEvent) => {
     e.stopPropagation();
+    if (currentImageIndex <= 0) return;
     setPrevImageIndex(currentImageIndex);
     setDirection("prev");
-    setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
+    setCurrentImageIndex((prev) => prev - 1);
   };
 
   const instagramLink = `https://www.instagram.com/${instagramUsername}/`;
@@ -96,20 +98,24 @@ export default function ProductModal({
                   )}
                   {images.length > 1 && (
                     <>
-                      <button 
-                        className={`${styles.navButton} ${styles.prevButton}`} 
-                        onClick={prevImage}
-                        aria-label="Foto anterior"
-                      >
-                        <ChevronLeft size={24} />
-                      </button>
-                      <button 
-                        className={`${styles.navButton} ${styles.nextButton}`} 
-                        onClick={nextImage}
-                        aria-label="Próxima foto"
-                      >
-                        <ChevronRight size={24} />
-                      </button>
+                      {currentImageIndex > 0 && (
+                        <button 
+                          className={`${styles.navButton} ${styles.prevButton}`} 
+                          onClick={prevImage}
+                          aria-label="Foto anterior"
+                        >
+                          <ChevronLeft size={24} />
+                        </button>
+                      )}
+                      {currentImageIndex < images.length - 1 && (
+                        <button 
+                          className={`${styles.navButton} ${styles.nextButton}`} 
+                          onClick={nextImage}
+                          aria-label="Próxima foto"
+                        >
+                          <ChevronRight size={24} />
+                        </button>
+                      )}
                     </>
                   )}
                 </>
