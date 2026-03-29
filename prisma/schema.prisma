@@ -20,3 +20,9 @@ model Product {
   updatedAt   DateTime @updatedAt
 }
 
+model CarouselImage {
+  id        String   @id @default(cuid())
+  url       String
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+}

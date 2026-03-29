@@ -5,6 +5,7 @@ import styles from "./page.module.css";
 import { Product } from "@prisma/client";
 import Link from "next/link";
 import Image from "next/image";
+import HeroCarousel from "@/components/HeroCarousel";
 
 const WHATSAPP_NUMBER = process.env.WHATSAPP_NUMBER || "5500000000000";
 
@@ -15,13 +16,22 @@ export default async function Home({
 }) {
   const { category: activeCategory } = await searchParams;
   let products: Product[] = [];
+  let carouselImages: any[] = [];
   
   try {
     const where = activeCategory ? { category: activeCategory } : {};
     products = await prisma.product.findMany({
-      where: where as any, // Cast to any to avoid temporarily outdated types lint error
+      where: where as any,
       orderBy: { createdAt: "desc" },
     });
+
+    try {
+      carouselImages = await prisma.carouselImage.findMany({
+        orderBy: { order: "asc" }
+      });
+    } catch (e) {
+      console.error("Aviso: Tabela Carrossel ainda não sincronizada, fallback ativado.");
+    }
   } catch (error) {
     console.error("Aviso: Conexão com o banco de dados falhou na Home. Verifique o arquivo .env");
   }
@@ -65,14 +75,7 @@ export default async function Home({
         </div>
       </header>
 
-      <section className={styles.hero}>
-        <div className={styles.heroOverlay}>
-          <div className={styles.heroContent}>
-            <h2 className={styles.heroTitle}>CRIAÇÕES FEITAS À MÃO</h2>
-            <p className={styles.heroSubtitle}>Qualidade e Charme em Cada Ponto</p>
-          </div>
-        </div>
-      </section>
+      <HeroCarousel images={carouselImages} />
 
       <main className={styles.main}>
         <ProductGrid

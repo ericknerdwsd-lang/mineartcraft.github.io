@@ -1,0 +1,32 @@
+.heroWrapper {
+  position: relative;
+  width: 100%;
+  min-height: 400px;
+  background-color: #E8E5DC;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .heroWrapper {
+    min-height: 300px;
+  }
+}
+
+.slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+  z-index: 1;
+}
+
+.slide.active {
+  opacity: 1;
+  z-index: 2;
+}
