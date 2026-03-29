@@ -16,7 +16,7 @@ const cormorant = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
-  title: "Catálogo de Produtos",
+  title: "Mineartcraft",
   description: "Confira nossos produtos com os melhores preços. Entre em contato pelo WhatsApp!",
 };
 

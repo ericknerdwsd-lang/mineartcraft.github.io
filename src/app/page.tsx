@@ -12,16 +12,21 @@ const WHATSAPP_NUMBER = process.env.WHATSAPP_NUMBER || "5500000000000";
 export default async function Home({
   searchParams,
 }: {
-  searchParams: Promise<{ category?: string }>;
+  searchParams: Promise<{ category?: string; q?: string }>;
 }) {
-  const { category: activeCategory } = await searchParams;
+  const { category: activeCategory, q: searchQuery } = await searchParams;
   let products: Product[] = [];
   let carouselImages: any[] = [];
-  
+
   try {
-    const where = activeCategory ? { category: activeCategory } : {};
+    const where: any = {};
+    if (activeCategory) where.category = activeCategory;
+    if (searchQuery) {
+      where.name = { contains: searchQuery, mode: "insensitive" };
+    }
+
     products = await prisma.product.findMany({
-      where: where as any,
+      where: where,
       orderBy: { createdAt: "desc" },
     });
 
@@ -47,37 +52,57 @@ export default async function Home({
     <>
       <header className={styles.header}>
         <div className={styles.headerContainer}>
-          <div className={styles.logoContainer}>
-            <Image 
-              src="/logo.png" 
-              alt="Logo" 
-              width={80} 
-              height={80} 
+          <Link href="/" className={styles.logoContainer}>
+            <Image
+              src="/logo.png"
+              alt="Logo"
+              width={80}
+              height={80}
               className={styles.headerLogo}
             />
-            <div>
-              <h1 className={styles.logo}>Catálogo de Produtos</h1>
-            </div>
-          </div>
-          <nav className={styles.nav}>
-            {categories.map((cat) => (
-              <Link
-                key={cat.id}
-                href={cat.id ? `/?category=${cat.id}` : "/"}
-                className={`${styles.navItem} ${
-                  (activeCategory || "") === cat.id ? styles.navItemActive : ""
-                }`}
-              >
-                {cat.label}
-              </Link>
-            ))}
-          </nav>
+            <h1 className={styles.headerTitle}>Mineartcraft</h1>
+          </Link>
+
+          <form action="/" method="GET" className={styles.searchForm}>
+            {activeCategory && <input type="hidden" name="category" value={activeCategory} />}
+            <input
+              type="text"
+              name="q"
+              placeholder="Buscar produtos..."
+              defaultValue={searchQuery}
+              className={styles.searchInput}
+            />
+            <button type="submit" className={styles.searchButton}>🔍</button>
+          </form>
         </div>
       </header>
 
       <HeroCarousel images={carouselImages} />
 
       <main className={styles.main}>
+        <div className={styles.catalogFilter}>
+          <h2 className={styles.catalogTitle}>Catálogo de Produtos</h2>
+          <nav className={styles.filterNav}>
+            {categories.map((cat) => {
+              const params = new URLSearchParams();
+              if (cat.id) params.set("category", cat.id);
+              if (searchQuery) params.set("q", searchQuery);
+              const href = params.toString() ? `/?${params.toString()}` : "/";
+
+              return (
+                <Link
+                  key={cat.id}
+                  href={href}
+                  className={`${styles.filterItem} ${(activeCategory || "") === cat.id ? styles.filterItemActive : ""
+                    }`}
+                >
+                  {cat.label}
+                </Link>
+              )
+            })}
+          </nav>
+        </div>
+
         <ProductGrid
           products={products}
           whatsappNumber={WHATSAPP_NUMBER}
