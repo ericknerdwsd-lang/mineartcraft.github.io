@@ -46,7 +46,8 @@ export default function NovoProduct() {
         const data = await res.json();
         setImages([...images, data.url]);
       } else {
-        setError("Erro ao fazer upload da imagem.");
+        const data = await res.json();
+        setError(data.error || "Erro ao fazer upload da imagem.");
       }
     } catch {
       setError("Erro ao conectar com o servidor.");
