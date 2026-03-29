@@ -32,13 +32,13 @@
 }
 
 .headerTitle {
-  font-family: var(--font-montserrat), sans-serif;
+  font-family: var(--font-cormorant), serif;
   font-size: 2.8rem;
   font-weight: 700;
   color: #223727;
   margin: 0;
   line-height: 1;
-  letter-spacing: -1px;
+  letter-spacing: -0.5px;
 }
 
 .searchForm {
@@ -333,12 +333,12 @@
 }
 
 .catalogTitle {
-  font-family: var(--font-montserrat), sans-serif;
+  font-family: var(--font-cormorant), serif;
   font-size: 2.5rem;
   font-weight: 700;
   color: #223727;
   margin: 0 0 1.5rem 0;
-  line-height: 1.1;
+  line-height: 1;
   letter-spacing: -0.5px;
 }
 

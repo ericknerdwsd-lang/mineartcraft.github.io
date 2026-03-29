@@ -196,9 +196,8 @@
 
 .categoryBadge {
   display: inline-block;
-  font-family: var(--font-montserrat), sans-serif;
   font-size: 0.8rem;
-  font-weight: 700;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 1px;
   padding: 0.35rem 0.8rem;
@@ -247,13 +246,12 @@
 }
 
 .descriptionTitle {
-  font-family: var(--font-montserrat), sans-serif;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   text-transform: uppercase;
   letter-spacing: 1.5px;
   color: #777;
   margin: 0 0 0.75rem 0;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .description {
@@ -274,9 +272,8 @@
   color: white;
   border: none;
   border-radius: 8px;
-  font-family: var(--font-montserrat), sans-serif;
   font-size: 1rem;
-  font-weight: 700;
+  font-weight: 600;
   text-decoration: none;
   cursor: pointer;
   transition: all 0.3s ease;
