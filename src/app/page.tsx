@@ -7,7 +7,7 @@ import Link from "next/link";
 import Image from "next/image";
 import HeroCarousel from "@/components/HeroCarousel";
 
-const INSTAGRAM_USERNAME = process.env.INSTAGRAM_USERNAME || "mineartecraft"; // placeholder
+const INSTAGRAM_USERNAME = process.env.INSTAGRAM_USERNAME || "mine.artecraft"; // placeholder
 
 export default async function Home({
   searchParams,
