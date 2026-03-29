@@ -26,6 +26,7 @@ export default function ProductModal({
   instagramUsername,
 }: ProductModalProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [prevImageIndex, setPrevImageIndex] = useState<number | null>(null);
   const [direction, setDirection] = useState<"next" | "prev" | null>(null);
 
   const formattedPrice = new Intl.NumberFormat("pt-BR", {
@@ -38,12 +39,14 @@ export default function ProductModal({
 
   const nextImage = (e: React.MouseEvent) => {
     e.stopPropagation();
+    setPrevImageIndex(currentImageIndex);
     setDirection("next");
     setCurrentImageIndex((prev) => (prev + 1) % images.length);
   };
 
   const prevImage = (e: React.MouseEvent) => {
     e.stopPropagation();
+    setPrevImageIndex(currentImageIndex);
     setDirection("prev");
     setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
   };
@@ -60,21 +63,37 @@ export default function ProductModal({
         <div className={styles.content}>
           <div className={styles.imageContainer}>
             <div className={styles.mainImageWrapper}>
-              {currentImage ? (
+              {(currentImage || prevImageIndex !== null) ? (
                 <>
-                  <Image
-                    key={currentImage}
-                    src={currentImage}
-                    alt={product.name}
-                    fill
-                    className={`
-                      ${styles.image} 
-                      ${direction === 'next' ? styles.slideInRight : ''}
-                      ${direction === 'prev' ? styles.slideInLeft : ''}
-                    `}
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    priority
-                  />
+                  {/* Imagem de Fundo (estática enquanto a nova desliza por cima) */}
+                  {prevImageIndex !== null && images[prevImageIndex] && (
+                    <Image
+                      src={images[prevImageIndex]}
+                      alt="Imagem anterior"
+                      fill
+                      className={styles.image}
+                      style={{ zIndex: 1 }}
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                    />
+                  )}
+
+                  {/* Imagem Atual (que desliza) */}
+                  {currentImage && (
+                    <Image
+                      key={currentImage}
+                      src={currentImage}
+                      alt={product.name}
+                      fill
+                      className={`
+                        ${styles.image} 
+                        ${direction === 'next' ? styles.slideInRight : ''}
+                        ${direction === 'prev' ? styles.slideInLeft : ''}
+                      `}
+                      style={{ zIndex: 2 }}
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      priority
+                    />
+                  )}
                   {images.length > 1 && (
                     <>
                       <button 
