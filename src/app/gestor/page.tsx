@@ -4,10 +4,11 @@ export const dynamic = "force-dynamic";
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { signOut } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { Plus, Pencil, Trash2, LogOut } from "lucide-react";
-import styles from "./admin.module.css";
+import styles from "./gestor.module.css";
 
 interface Product {
   id: string;
@@ -65,8 +66,7 @@ export default function AdminDashboard() {
   };
 
   const handleLogout = async () => {
-    await fetch("/api/auth/logout", { method: "POST" });
-    router.push("/admin/login");
+    signOut({ callbackUrl: "/gestor/login" });
   };
 
   const formatPrice = (price: number) =>
@@ -80,13 +80,13 @@ export default function AdminDashboard() {
       <header className={styles.header}>
         <div className={styles.headerContent}>
           <div>
-            <h1 className={styles.title}>Painel Admin</h1>
+            <h1 className={styles.title}>Painel Gestor</h1>
             <p className={styles.subtitle}>
               {products.length} produto{products.length !== 1 ? "s" : ""} cadastrado{products.length !== 1 ? "s" : ""}
             </p>
           </div>
           <div className={styles.headerActions}>
-            <Link href="/admin/novo" className={styles.addButton}>
+            <Link href="/gestor/novo" className={styles.addButton}>
               <Plus size={20} />
               Novo Produto
             </Link>
@@ -111,7 +111,7 @@ export default function AdminDashboard() {
             </svg>
             <h3>Nenhum produto cadastrado</h3>
             <p>Comece adicionando seu primeiro produto!</p>
-            <Link href="/admin/novo" className={styles.addButton}>
+            <Link href="/gestor/novo" className={styles.addButton}>
               <Plus size={20} />
               Adicionar Produto
             </Link>
@@ -149,7 +149,7 @@ export default function AdminDashboard() {
                 <span className={styles.colPrice}>{formatPrice(product.price)}</span>
                 <div className={styles.colActions}>
                   <Link
-                    href={`/admin/editar/${product.id}`}
+                    href={`/gestor/editar/${product.id}`}
                     className={styles.editButton}
                   >
                     <Pencil size={16} />

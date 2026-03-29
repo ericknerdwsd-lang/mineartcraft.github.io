@@ -120,7 +120,7 @@ export default function EditarProduct() {
       });
 
       if (res.ok) {
-        router.push("/admin");
+        router.push("/gestor");
       } else {
         setError("Erro ao atualizar produto.");
       }
@@ -145,7 +145,7 @@ export default function EditarProduct() {
     <div className={styles.container}>
       <header className={styles.header}>
         <div className={styles.headerContent}>
-          <Link href="/admin" className={styles.backButton}>
+          <Link href="/gestor" className={styles.backButton}>
             <ArrowLeft size={20} />
           </Link>
           <h1 className={styles.title}>Editar Produto</h1>
