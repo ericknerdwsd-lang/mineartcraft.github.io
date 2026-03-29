@@ -53,6 +53,12 @@ export default function ProductModal({
     setCurrentImageIndex((prev) => prev - 1);
   };
 
+  const categoryLabels: Record<string, string> = {
+    amigurumis: "Amigurumis",
+    roupas: "Roupas",
+    bolsas_acessorios: "Bolsas e Acessórios"
+  };
+
   const instagramLink = `https://www.instagram.com/${instagramUsername}/`;
 
   return (
@@ -150,7 +156,7 @@ export default function ProductModal({
               ${product.category === 'roupas' ? styles.categoryRoupa : ""}
               ${product.category === 'bolsas_acessorios' ? styles.categoryBolsa : ""}
             `}>
-              {product.category.replace(/_/g, " ")}
+              {categoryLabels[product.category] || product.category}
             </span>
             <h2 className={styles.name}>{product.name}</h2>
             <p className={styles.price}>{formattedPrice}</p>

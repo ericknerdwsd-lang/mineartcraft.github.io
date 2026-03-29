@@ -18,9 +18,9 @@ interface ProductCardProps {
 }
 
 const categoryTags: Record<string, { label: string, colorClass: string }> = {
-  amigurumis: { label: "Amigurumi", colorClass: styles.tagAmigurumi },
-  roupas: { label: "Roupa", colorClass: styles.tagRoupa },
-  bolsas_acessorios: { label: "Bolsa & Acessório", colorClass: styles.tagBolsa }
+  amigurumis: { label: "Amigurumis", colorClass: styles.tagAmigurumi },
+  roupas: { label: "Roupas", colorClass: styles.tagRoupa },
+  bolsas_acessorios: { label: "Bolsas e Acessórios", colorClass: styles.tagBolsa }
 };
 
 export default function ProductCard({ product, onClick }: ProductCardProps) {
