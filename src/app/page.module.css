@@ -244,10 +244,13 @@
   
   .nav {
     width: 100%;
-    justify-content: center;
-    gap: 1rem;
-    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 1.5rem;
+    flex-wrap: nowrap;
+    overflow-x: auto;
     padding-bottom: 0.5rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
   }
 
   .navItem {
