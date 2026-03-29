@@ -7,7 +7,7 @@ import Link from "next/link";
 import Image from "next/image";
 import HeroCarousel from "@/components/HeroCarousel";
 
-const INSTAGRAM_USERNAME = process.env.INSTAGRAM_USERNAME || "mine.artcraft"; // placeholder
+const INSTAGRAM_USERNAME = process.env.INSTAGRAM_USERNAME || "mineartecraft"; // placeholder
 
 export default async function Home({
   searchParams,
@@ -60,7 +60,7 @@ export default async function Home({
               height={80}
               className={styles.headerLogo}
             />
-            <h1 className={styles.headerTitle}>Mineartcraft</h1>
+            <h1 className={styles.headerTitle}>Mineartecraft</h1>
           </Link>
 
           <form action="/" method="GET" className={styles.searchForm}>
