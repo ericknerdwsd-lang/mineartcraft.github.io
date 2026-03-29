@@ -22,39 +22,39 @@
 }
 
 .modal {
-  background: #FFFDF7;
-  border-radius: 20px;
-  max-width: 820px;
+  background: #FFFFFF;
+  border-radius: 16px;
+  max-width: 900px;
   width: 100%;
   max-height: 90vh;
   overflow-y: auto;
   position: relative;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
   animation: slideUp 0.3s ease-out;
+  border: 1px solid #EAEAEA;
 }
 
 .closeButton {
   position: absolute;
   top: 16px;
   right: 16px;
-  background: rgba(255, 255, 255, 0.9);
-  border: none;
+  background: #F5F5F5;
+  border: 1px solid #EAEAEA;
   border-radius: 50%;
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   z-index: 10;
-  color: #4E6E5D;
+  color: #555;
   transition: all 0.2s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .closeButton:hover {
-  background: #4E6E5D;
-  color: white;
+  background: #EAEAEA;
+  color: #223727;
   transform: rotate(90deg);
 }
 
@@ -106,12 +106,12 @@
 }
 
 .thumbnailActive {
-  border-color: #81C784;
+  border-color: #4A6352;
   transform: scale(1.05);
 }
 
 .thumbnail:hover:not(.thumbnailActive) {
-  border-color: #C8E6C9;
+  border-color: #EAEAEA;
 }
 
 .image {
@@ -170,37 +170,56 @@
 }
 
 .details {
-  padding: 2.5rem;
+  padding: 3rem 2.5rem;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.25rem;
+}
+
+.categoryBadge {
+  display: inline-block;
+  background-color: #F5F5F5;
+  color: #555555;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 0.35rem 0.8rem;
+  border-radius: 20px;
+  margin-bottom: 0.5rem;
+  align-self: flex-start;
+  border: 1px solid #EAEAEA;
 }
 
 .name {
-  font-size: 1.75rem;
-  color: #4E6E5D;
+  font-family: var(--font-cormorant), serif;
+  font-size: 2.5rem;
+  color: #223727;
   font-weight: 700;
-  line-height: 1.2;
+  line-height: 1.1;
   margin: 0;
+  letter-spacing: -0.5px;
 }
 
 .price {
   font-size: 1.5rem;
-  font-weight: 800;
-  color: #81C784;
-  margin: 0;
+  font-weight: 600;
+  color: #4A6352;
+  margin: 0 0 1rem 0;
 }
 
 .descriptionContainer {
   margin-top: 0.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #EAEAEA;
 }
 
 .descriptionTitle {
   font-size: 0.85rem;
   text-transform: uppercase;
   letter-spacing: 1.5px;
-  color: #a0998e;
-  margin: 0 0 0.5rem 0;
+  color: #777;
+  margin: 0 0 0.75rem 0;
   font-weight: 600;
 }
 
@@ -221,19 +240,18 @@
   background: #25D366;
   color: white;
   border: none;
-  border-radius: 12px;
+  border-radius: 8px;
   font-size: 1rem;
   font-weight: 600;
   text-decoration: none;
   cursor: pointer;
-  transition: all 0.25s ease;
-  box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+  transition: all 0.3s ease;
 }
 
 .whatsappButton:hover {
   background: #1da851;
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+  box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
 }
 
 @media (max-width: 768px) {

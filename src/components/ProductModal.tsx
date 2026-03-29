@@ -117,6 +117,9 @@ export default function ProductModal({
           </div>
 
           <div className={styles.details}>
+            <span className={styles.categoryBadge}>
+              {product.category.replace(/_/g, " ")}
+            </span>
             <h2 className={styles.name}>{product.name}</h2>
             <p className={styles.price}>{formattedPrice}</p>
 
