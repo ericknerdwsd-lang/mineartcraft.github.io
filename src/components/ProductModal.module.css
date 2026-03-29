@@ -178,8 +178,6 @@
 
 .categoryBadge {
   display: inline-block;
-  background-color: #F5F5F5;
-  color: #555555;
   font-size: 0.8rem;
   font-weight: 600;
   text-transform: uppercase;
@@ -188,7 +186,22 @@
   border-radius: 20px;
   margin-bottom: 0.5rem;
   align-self: flex-start;
-  border: 1px solid #EAEAEA;
+  border: 1px solid transparent;
+}
+
+.categoryAmigurumi {
+  background-color: #E8D5F5;
+  color: #7B2D9E;
+}
+
+.categoryRoupa {
+  background-color: #D5EDF5;
+  color: #1A6B8A;
+}
+
+.categoryBolsa {
+  background-color: #D5F5E3;
+  color: #1A7A4A;
 }
 
 .name {

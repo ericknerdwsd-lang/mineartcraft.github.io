@@ -354,14 +354,43 @@
 
 @media (max-width: 768px) {
   .headerContainer {
-    justify-content: center;
     flex-direction: column;
-    gap: 1rem;
+    align-items: center;
+    text-align: center;
+    gap: 1.25rem;
+    padding: 0.5rem 0;
+  }
+
+  .logoContainer {
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .headerLogo {
+    width: 65px;
+    height: 65px;
+  }
+  
+  .headerTitle {
+    font-size: 2.2rem;
   }
   
   .searchForm {
-    width: 100%;
-    max-width: 100%;
+    width: 85%;
+    max-width: 320px;
+    margin: 0 auto;
+    padding: 0.15rem 0.4rem;
+  }
+
+  .searchInput {
+    font-size: 0.85rem;
+    padding: 0.4rem 0.8rem;
+  }
+  
+  .searchButton {
+    padding: 0.4rem;
   }
   
   .filterNav {

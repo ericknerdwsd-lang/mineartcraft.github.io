@@ -114,7 +114,12 @@ export default function ProductModal({
           </div>
 
           <div className={styles.details}>
-            <span className={styles.categoryBadge}>
+            <span className={`
+              ${styles.categoryBadge} 
+              ${product.category === 'amigurumis' ? styles.categoryAmigurumi : ""}
+              ${product.category === 'roupas' ? styles.categoryRoupa : ""}
+              ${product.category === 'bolsas_acessorios' ? styles.categoryBolsa : ""}
+            `}>
               {product.category.replace(/_/g, " ")}
             </span>
             <h2 className={styles.name}>{product.name}</h2>
