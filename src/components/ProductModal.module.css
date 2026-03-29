@@ -230,14 +230,14 @@
   margin: 0;
 }
 
-.whatsappButton {
+.instagramButton {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
   margin-top: auto;
   padding: 14px 28px;
-  background: #25D366;
+  background: #223727;
   color: white;
   border: none;
   border-radius: 8px;
@@ -248,10 +248,10 @@
   transition: all 0.3s ease;
 }
 
-.whatsappButton:hover {
-  background: #1da851;
+.instagramButton:hover {
+  background: #142117;
   transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+  box-shadow: 0 4px 15px rgba(34, 55, 39, 0.3);
 }
 
 @media (max-width: 768px) {

@@ -16,10 +16,10 @@ interface Product {
 
 interface ProductGridProps {
   products: Product[];
-  whatsappNumber: string;
+  instagramUsername: string;
 }
 
-export default function ProductGrid({ products, whatsappNumber }: ProductGridProps) {
+export default function ProductGrid({ products, instagramUsername }: ProductGridProps) {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
   return (
@@ -49,7 +49,7 @@ export default function ProductGrid({ products, whatsappNumber }: ProductGridPro
         <ProductModal
           product={selectedProduct}
           onClose={() => setSelectedProduct(null)}
-          whatsappNumber={whatsappNumber}
+          instagramUsername={instagramUsername}
         />
       )}
     </>

@@ -7,7 +7,7 @@ import Link from "next/link";
 import Image from "next/image";
 import HeroCarousel from "@/components/HeroCarousel";
 
-const WHATSAPP_NUMBER = process.env.WHATSAPP_NUMBER || "5500000000000";
+const INSTAGRAM_USERNAME = process.env.INSTAGRAM_USERNAME || "mineartcraft"; // placeholder
 
 export default async function Home({
   searchParams,
@@ -105,7 +105,7 @@ export default async function Home({
 
         <ProductGrid
           products={products}
-          whatsappNumber={WHATSAPP_NUMBER}
+          instagramUsername={INSTAGRAM_USERNAME}
         />
       </main>
 
