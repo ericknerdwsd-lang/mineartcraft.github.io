@@ -93,6 +93,7 @@ export default async function Home({
                 <Link
                   key={cat.id}
                   href={href}
+                  scroll={false}
                   className={`${styles.filterItem} ${(activeCategory || "") === cat.id ? styles.filterItemActive : ""
                     }`}
                 >
