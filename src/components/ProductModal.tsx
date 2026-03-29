@@ -44,7 +44,7 @@ export default function ProductModal({
     setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
   };
 
-  const instagramLink = `https://www.instagram.com/direct/t/${instagramUsername}/`;
+  const instagramLink = `https://www.instagram.com/${instagramUsername}/`;
 
   return (
     <div className={styles.overlay} onClick={onClose}>
