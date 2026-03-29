@@ -33,7 +33,7 @@ export default function TermosPage() {
           <section className={styles.section}>
             <h3>2. Pedidos e Encomendas</h3>
             <p>
-              A Mineartecraft não processa pagamentos diretamente pelo site. Ao clicar em "Ver detalhes" e solicitar um produto, você será redirecionado para o WhatsApp oficial. Todos os detalhes de pagamento, prazos de entrega e especificações do produto são acordados diretamente via WhatsApp.
+              A Mineartecraft não processa pagamentos diretamente pelo site. Ao clicar em "Tenho Interesse" e solicitar um produto, você será redirecionado para o nosso perfil oficial no Instagram. Todos os detalhes de pagamento, prazos de entrega e especificações do produto são acordados diretamente via Direct do Instagram.
             </p>
           </section>
 
@@ -54,7 +54,7 @@ export default function TermosPage() {
           <section className={styles.section}>
              <h3>5. Privacidade</h3>
              <p>
-               Valorizamos sua privacidade. Não coletamos dados pessoais sensíveis ou informações de pagamento através deste catálogo. O redirecionamento para redes sociais ou WhatsApp segue as políticas de privacidade dessas plataformas externas.
+               Valorizamos sua privacidade. Não coletamos dados pessoais sensíveis ou informações de pagamento através deste catálogo. O redirecionamento para o Instagram segue as políticas de privacidade desta plataforma externa.
              </p>
           </section>
 
