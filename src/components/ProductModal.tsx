@@ -26,6 +26,8 @@ export default function ProductModal({
   instagramUsername,
 }: ProductModalProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [direction, setDirection] = useState<"next" | "prev" | null>(null);
+
   const formattedPrice = new Intl.NumberFormat("pt-BR", {
     style: "currency",
     currency: "BRL",
@@ -36,11 +38,13 @@ export default function ProductModal({
 
   const nextImage = (e: React.MouseEvent) => {
     e.stopPropagation();
+    setDirection("next");
     setCurrentImageIndex((prev) => (prev + 1) % images.length);
   };
 
   const prevImage = (e: React.MouseEvent) => {
     e.stopPropagation();
+    setDirection("prev");
     setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
   };
 
@@ -59,10 +63,15 @@ export default function ProductModal({
               {currentImage ? (
                 <>
                   <Image
+                    key={currentImage}
                     src={currentImage}
                     alt={product.name}
                     fill
-                    className={styles.image}
+                    className={`
+                      ${styles.image} 
+                      ${direction === 'next' ? styles.slideInRight : ''}
+                      ${direction === 'prev' ? styles.slideInLeft : ''}
+                    `}
                     sizes="(max-width: 768px) 100vw, 50vw"
                     priority
                   />
