@@ -150,10 +150,18 @@
   justify-content: center;
   cursor: pointer;
   color: #4E6E5D;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
   z-index: 5;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(4px);
+  opacity: 1;
+  visibility: visible;
+}
+
+.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
 }
 
 .navButton:hover {

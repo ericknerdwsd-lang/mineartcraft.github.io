@@ -98,24 +98,20 @@ export default function ProductModal({
                   )}
                   {images.length > 1 && (
                     <>
-                      {currentImageIndex > 0 && (
-                        <button 
-                          className={`${styles.navButton} ${styles.prevButton}`} 
-                          onClick={prevImage}
-                          aria-label="Foto anterior"
-                        >
-                          <ChevronLeft size={24} />
-                        </button>
-                      )}
-                      {currentImageIndex < images.length - 1 && (
-                        <button 
-                          className={`${styles.navButton} ${styles.nextButton}`} 
-                          onClick={nextImage}
-                          aria-label="Próxima foto"
-                        >
-                          <ChevronRight size={24} />
-                        </button>
-                      )}
+                      <button 
+                        className={`${styles.navButton} ${styles.prevButton} ${currentImageIndex === 0 ? styles.hidden : ''}`} 
+                        onClick={prevImage}
+                        aria-label="Foto anterior"
+                      >
+                        <ChevronLeft size={24} />
+                      </button>
+                      <button 
+                        className={`${styles.navButton} ${styles.nextButton} ${currentImageIndex === images.length - 1 ? styles.hidden : ''}`} 
+                        onClick={nextImage}
+                        aria-label="Próxima foto"
+                      >
+                        <ChevronRight size={24} />
+                      </button>
                     </>
                   )}
                 </>
