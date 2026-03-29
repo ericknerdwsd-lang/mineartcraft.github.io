@@ -86,3 +86,59 @@
 .card:hover .actionButton {
   background-color: #4A6352;
 }
+
+/* ─── Tags de Categoria ─── */
+.tag {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 3;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 20px;
+  pointer-events: none;
+}
+
+.tagAmigurumi {
+  background-color: #E8D5F5;
+  color: #7B2D9E;
+}
+
+.tagRoupa {
+  background-color: #D5EDF5;
+  color: #1A6B8A;
+}
+
+.tagBolsa {
+  background-color: #D5F5E3;
+  color: #1A7A4A;
+}
+
+/* ─── Mobile ─── */
+@media (max-width: 640px) {
+  .info {
+    padding: 0.75rem 0.6rem;
+  }
+
+  .name {
+    font-size: 0.85rem;
+  }
+
+  .price {
+    font-size: 0.95rem;
+    margin: 0 0 0.5rem 0;
+  }
+
+  .actionButton {
+    padding: 0.6rem 0.5rem;
+    font-size: 0.8rem;
+  }
+
+  .tag {
+    font-size: 0.6rem;
+    padding: 2px 6px;
+  }
+}

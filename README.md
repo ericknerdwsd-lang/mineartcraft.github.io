@@ -1,36 +1,77 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Catálogo de Produtos Mineartcraft 🧶
 
-## Getting Started
+Bem-vindo ao repositório do **Catálogo de Produtos Mineartcraft**. Este é um projeto de vitrine virtual moderna criada usando React e Next.js, contando com um painel administrativo completo para gestão de imagens e produtos, desenvolvido focando em navegação rápida e SEO.
 
-First, run the development server:
+## 🚀 Tecnologias Integradas
+- **Framework Frontend**: [Next.js](https://nextjs.org/) (App Router, Server Components)
+- **Estilização**: CSS Modules puro + Variáveis CSS e Google Fonts (Cormorant & Inter)
+- **Banco de Dados**: PostgreSQL servido pela Vercel Postgres e manipulado via **Prisma ORM**
+- **Autenticação Administrativa**: `next-auth` (Credentials Provider via JWT)
+- **Storage de Imagens**: `@vercel/blob` (Hospedagem nativa de fotos rápidas sem infraestrutura pesada)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 📂 Estrutura de Pastas e Rotas Principais
+A aplicação adota as convenções do "App Router" do Next.js padrão dentro da pasta `/src`. 
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- `src/app/`
+  - `page.tsx`: A vitrine global. Trata leitura do banco, queries de busca e filtro de categorias através de "Search Parameters" diretamente no lado do servidor.
+  - `layout.tsx`: Estrutura do documento HTML e tags Meta base do site.
+  - `/api/`: Controladores backend organizados em pastas para:
+    - `/auth`: Handles de permissões.
+    - `/carousel`: CRUD das 4 imagens destaque no topo do projeto.
+    - `/products`: CRUD total dos itens (preço, fotos array, id e categoria).
+    - `/upload`: Endpoint voltado para injetar buffers na cloud Vercel Blob e retornar as URLs definitivas.
+  - `/gestor/`: Todas as páginas fechadas. Rotas filhas como `/novo` e `/editar` dependem de estar em sessão no sistema.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- `src/components/`: Pedaços isolados de interface que compõem o painel e a Home (HeroCarousel, ProductGrid, ProductModal, ProductCard). Protegem a tela garantindo que hooks e comportamentos "Client Side" não poluam o HTML do Server.
+- `src/lib/`: Instâncias reutilizáveis externas, contendo essencialmente o aquecedor cacheado do `prisma`.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## ⚙️ Instalação e Execução (Para Desenvolvedores)
 
-## Learn More
+1. **Instale as dependências:**
+   ```bash
+   npm install
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+2. **Configure o Arquivo `.env` na raiz do projeto:**
+   É altamente necessário ter variáveis setadas para rodar localmente com sucesso:
+   ```env
+   # BANCO DE DADOS
+   POSTGRES_URL="..."
+   POSTGRES_PRISMA_URL="..."
+   POSTGRES_URL_NON_POOLING="..."
+   
+   # STORAGE DE IMAGENS 
+   BLOB_READ_WRITE_TOKEN="..."
+   
+   # CONTATO E SEGURANÇA
+   WHATSAPP_NUMBER="55DDDXXXXXXXXX"
+   NEXTAUTH_SECRET="uma-string-complexa-e-aleatoria"
+   NEXTAUTH_URL="http://localhost:3000" # Mudar na Vercel para dominio.com
+   
+   # USUÁRIO DO PAINEL ADMIN
+   ADMIN_USERNAME="admin"
+   ADMIN_PASSWORD="sua_senha_segura"
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. **Sincronize o Banco de Dados (Prisma)**
+   Sempre que baixar novas atualizações, ou em primeiro deploy:
+   ```bash
+   npx prisma generate
+   npx prisma db push
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+4. **Inicie o Ambiente de Desenvolvimento**
+   ```bash
+   npm run dev
+   ```
+   Acesse a visualização em http://localhost:3000
 
-## Deploy on Vercel
+## 📝 Como usar o Gestor 
+**Painel**: Acesse o site em `/gestor/login` e coloque o Login e Senha ditados no `.env`.
+Neste painel administrativo é possível:
+1. Cadastrar novos produtos, enviando até 4 fotos por produto, preços e determinando se ele é um *Amigurumi, Roupa, Bolsa ou Acessório*.
+2. Apagar produtos, ou editar seus dados.
+3. Personalizar o layout de introdução do site subindo fotos únicas que se movem sozinhas na página principal na opção **Imagens do Destaque (Carrossel)** (máximo de 4 imagens).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+*Este documento reflete a arquitetura atualizada contendo otimizações de componentização, correções de tipo em TypeScript e modularização de estilos.*

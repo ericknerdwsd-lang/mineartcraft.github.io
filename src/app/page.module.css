@@ -167,16 +167,17 @@
 }
 
 .heroContent {
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.6);
   backdrop-filter: blur(8px);
-  padding: 3rem 4rem;
+  padding: 2rem 3rem;
   text-align: center;
   width: 100%;
-  max-width: 900px;
+  max-width: 700px;
+  border-radius: 12px;
 }
 
 .heroTitle {
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: 800;
   color: #223727;
   margin: 0 0 0.5rem 0;
@@ -185,7 +186,7 @@
 }
 
 .heroSubtitle {
-  font-size: 1.2rem;
+  font-size: 1rem;
   color: #4A6352;
   margin: 0;
   font-weight: 500;
@@ -358,19 +359,28 @@
     gap: 1rem;
   }
   
-  .nav {
+  .searchForm {
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  .filterNav {
     width: 100%;
     justify-content: flex-start;
-    gap: 1.5rem;
+    gap: 1rem;
     flex-wrap: nowrap;
     overflow-x: auto;
     padding-bottom: 0.5rem;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 
-  .navItem {
+  .filterItem {
     font-size: 0.9rem;
+  }
+
+  .catalogTitle {
+    font-size: 1.8rem;
   }
 
   .hero {
@@ -378,16 +388,16 @@
   }
 
   .heroContent {
-    padding: 2rem 1rem;
+    padding: 1.5rem 1rem;
   }
 
   .heroTitle {
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     letter-spacing: 1px;
   }
 
   .heroSubtitle {
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
 
   .main {

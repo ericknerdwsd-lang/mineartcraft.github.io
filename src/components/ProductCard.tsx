@@ -17,6 +17,12 @@ interface ProductCardProps {
   onClick: (product: Product) => void;
 }
 
+const categoryTags: Record<string, { label: string, colorClass: string }> = {
+  amigurumis: { label: "Amigurumi", colorClass: styles.tagAmigurumi },
+  roupas: { label: "Roupa", colorClass: styles.tagRoupa },
+  bolsas_acessorios: { label: "Bolsa & Acessório", colorClass: styles.tagBolsa }
+};
+
 export default function ProductCard({ product, onClick }: ProductCardProps) {
   const formattedPrice = new Intl.NumberFormat("pt-BR", {
     style: "currency",
@@ -24,10 +30,16 @@ export default function ProductCard({ product, onClick }: ProductCardProps) {
   }).format(product.price);
 
   const mainImage = product.images?.[0];
+  const tagInfo = product.category ? categoryTags[product.category] : null;
 
   return (
     <div className={styles.card} onClick={() => onClick(product)}>
       <div className={styles.imageWrapper}>
+        {tagInfo && (
+           <span className={`${styles.tag} ${tagInfo.colorClass}`}>
+             {tagInfo.label}
+           </span>
+        )}
         {mainImage ? (
           <Image
             src={mainImage}

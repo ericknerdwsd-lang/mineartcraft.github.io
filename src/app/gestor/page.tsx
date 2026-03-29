@@ -179,13 +179,13 @@ export default function AdminDashboard() {
 
       <main className={styles.main}>
         {/* Seção do Carrossel (Destaques do Topo) */}
-        <div className={styles.carouselSection} style={{ marginBottom: "3rem", padding: "1.5rem", background: "#f9f9f9", borderRadius: "12px", border: "1px solid #eee" }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
-            <h2 style={{ fontSize: "1.2rem", fontWeight: "600", color: "#333" }}>Imagens do Destaque (Carrossel)</h2>
+        <div className={styles.carouselSection}>
+          <div className={styles.carouselHeader}>
+            <h2 className={styles.carouselTitle}>Imagens do Destaque (Carrossel)</h2>
             <button
               onClick={() => fileInputRef.current?.click()}
               disabled={uploadingBg || carouselImages.length >= 4}
-              style={{ padding: "0.5rem 1rem", background: "#4A6352", color: "white", borderRadius: "6px", border: "none", cursor: "pointer", display: "flex", alignItems: "center", gap: "0.5rem" }}
+              className={styles.carouselUploadBtn}
             >
               <UploadCloud size={18} />
               {uploadingBg ? "Enviando..." : "Nova Foto"}
@@ -199,20 +199,20 @@ export default function AdminDashboard() {
             />
           </div>
           
-          <p style={{ fontSize: "0.9rem", color: "#666", marginBottom: "1.5rem" }}>Faça upload de até 4 imagens para girar automaticamente no topo do catálogo. (Atual: {carouselImages.length}/4)</p>
+          <p className={styles.carouselHelp}>Faça upload de até 4 imagens para girar automaticamente no topo do catálogo. (Atual: {carouselImages.length}/4)</p>
 
           {loadingCarousel ? (
-             <p>Carregando destaques...</p>
+             <p className={styles.carouselHelp}>Carregando destaques...</p>
           ) : carouselImages.length === 0 ? (
-             <p style={{ color: "#aaa", fontStyle: "italic" }}>O carrossel usará a foto de fundo padrão. Adicione fotos aqui para substituí-la.</p>
+             <p className={styles.carouselEmpty}>O carrossel usará a foto de fundo padrão. Adicione fotos aqui para substituí-la.</p>
           ) : (
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: "1rem" }}>
+            <div className={styles.carouselGrid}>
               {carouselImages.map(img => (
-                <div key={img.id} style={{ position: "relative", width: "100%", aspectRatio: "16/9", borderRadius: "8px", overflow: "hidden", border: "1px solid #ddd" }}>
+                <div key={img.id} className={styles.carouselItem}>
                   <Image src={img.url} alt="Destaque" fill style={{ objectFit: "cover" }} />
                   <button 
                     onClick={() => handleDeleteCarousel(img.id)}
-                    style={{ position: "absolute", top: "8px", right: "8px", background: "rgba(255,0,0,0.8)", color: "white", border: "none", padding: "6px", borderRadius: "50%", cursor: "pointer", zIndex: 10 }}
+                    className={styles.carouselDeleteBtn}
                     title="Remover Imagem"
                   >
                     <Trash2 size={14} />
@@ -225,7 +225,7 @@ export default function AdminDashboard() {
 
         {/* Lista de Produtos Tradicional */}
         <div>
-          <h2 style={{ fontSize: "1.2rem", fontWeight: "600", color: "#333", marginBottom: "1rem" }}>Produtos do Catálogo</h2>
+          <h2 className={styles.sectionTitle}>Produtos do Catálogo</h2>
           {loading ? (
             <div className={styles.loading}>
               <div className={styles.spinner}></div>

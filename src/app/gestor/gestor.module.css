@@ -1,16 +1,21 @@
+/* ===================================================
+   Painel Gestor — visual alinhado ao Catálogo
+   =================================================== */
+
 .container {
   min-height: 100vh;
-  background: #FDF5E6;
+  background: #F9F7F2;
 }
 
+/* ─── Cabeçalho ─── */
 .header {
-  background: #FFFDF7;
-  border-bottom: 1px solid rgba(200, 230, 201, 0.5);
+  background: #FFFFFF;
+  border-bottom: 1px solid #EAEAEA;
   padding: 1.5rem 2rem;
   position: sticky;
   top: 0;
   z-index: 100;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
 .headerContent {
@@ -23,14 +28,15 @@
 
 .title {
   font-size: 1.5rem;
-  color: #4E6E5D;
+  font-weight: 700;
+  color: #223727;
   margin: 0;
 }
 
 .subtitle {
-  color: #a0998e;
+  color: #888;
   font-size: 0.85rem;
-  margin: 0.25rem 0 0 0;
+  margin: 0.3rem 0 0 0;
 }
 
 .headerActions {
@@ -39,26 +45,25 @@
   gap: 0.75rem;
 }
 
+/* ─── Botões ─── */
 .addButton {
   display: inline-flex;
   align-items: center;
   gap: 8px;
   padding: 10px 20px;
-  background: linear-gradient(135deg, #81C784, #4E6E5D);
+  background-color: #223727;
   color: white;
   border: none;
-  border-radius: 10px;
+  border-radius: 6px;
   font-size: 0.9rem;
   font-weight: 600;
   text-decoration: none;
   cursor: pointer;
-  transition: all 0.25s ease;
-  box-shadow: 0 4px 12px rgba(78, 110, 93, 0.25);
+  transition: background-color 0.3s ease;
 }
 
 .addButton:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(78, 110, 93, 0.35);
+  background-color: #4A6352;
 }
 
 .logoutButton {
@@ -67,40 +72,41 @@
   justify-content: center;
   width: 40px;
   height: 40px;
-  border-radius: 10px;
-  border: 1px solid #e8e4dc;
+  border-radius: 6px;
+  border: 1px solid #EAEAEA;
   background: transparent;
-  color: #a0998e;
+  color: #888;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .logoutButton:hover {
-  background: #fdf0ef;
+  background: #fff0ef;
   color: #e74c3c;
   border-color: #e74c3c;
 }
 
+/* ─── Main ─── */
 .main {
   max-width: 1000px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 2.5rem 2rem;
 }
 
-/* Loading */
+/* ─── Loading ─── */
 .loading {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 4rem;
-  color: #a0998e;
+  color: #888;
 }
 
 .spinner {
   width: 36px;
   height: 36px;
-  border: 3px solid #e8e4dc;
-  border-top-color: #81C784;
+  border: 3px solid #EAEAEA;
+  border-top-color: #4A6352;
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
   margin-bottom: 1rem;
@@ -110,23 +116,24 @@
   to { transform: rotate(360deg); }
 }
 
-/* Empty State */
+/* ─── Empty State ─── */
 .empty {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 4rem 2rem;
   text-align: center;
-  color: #a0998e;
+  color: #888;
 }
 
 .empty svg {
   margin-bottom: 1rem;
-  opacity: 0.5;
+  opacity: 0.4;
 }
 
 .empty h3 {
-  color: #4E6E5D;
+  color: #223727;
+  font-size: 1.25rem;
   margin: 0 0 0.5rem 0;
 }
 
@@ -134,26 +141,26 @@
   margin: 0 0 1.5rem;
 }
 
-/* Table */
+/* ─── Tabela de Produtos ─── */
 .table {
-  background: #FFFDF7;
-  border-radius: 16px;
+  background: #FFFFFF;
+  border-radius: 8px;
   overflow: hidden;
-  border: 1px solid rgba(200, 230, 201, 0.4);
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+  border: 1px solid #EAEAEA;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
 .tableHeader {
   display: grid;
   grid-template-columns: 80px 1fr 120px 100px;
   padding: 0.75rem 1.5rem;
-  background: #f7f4ee;
-  font-size: 0.75rem;
+  background: #F9F7F2;
+  font-size: 0.7rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1px;
-  color: #a0998e;
-  border-bottom: 1px solid #e8e4dc;
+  color: #888;
+  border-bottom: 1px solid #EAEAEA;
   align-items: center;
 }
 
@@ -162,7 +169,7 @@
   grid-template-columns: 80px 1fr 120px 100px;
   padding: 1rem 1.5rem;
   align-items: center;
-  border-bottom: 1px solid #f0ece4;
+  border-bottom: 1px solid #F0EEE8;
   transition: background 0.15s ease;
 }
 
@@ -171,16 +178,16 @@
 }
 
 .tableRow:hover {
-  background: #faf8f2;
+  background: #F9F7F2;
 }
 
 .thumbnail {
   position: relative;
   width: 52px;
   height: 52px;
-  border-radius: 10px;
+  border-radius: 6px;
   overflow: hidden;
-  background: #f0ece4;
+  background: #F0EEE8;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -192,13 +199,13 @@
 
 .colName {
   font-weight: 600;
-  color: #2D3436;
+  color: #223727;
   font-size: 0.95rem;
 }
 
 .colPrice {
   font-weight: 700;
-  color: #4E6E5D;
+  color: #4A6352;
   font-size: 0.95rem;
 }
 
@@ -214,8 +221,8 @@
   justify-content: center;
   width: 36px;
   height: 36px;
-  border-radius: 8px;
-  border: 1px solid #e8e4dc;
+  border-radius: 6px;
+  border: 1px solid #EAEAEA;
   background: transparent;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -223,20 +230,20 @@
 }
 
 .editButton {
-  color: #4E6E5D;
+  color: #4A6352;
 }
 
 .editButton:hover {
-  background: #E8F5E9;
-  border-color: #81C784;
+  background: #F0F7F1;
+  border-color: #4A6352;
 }
 
 .deleteButton {
-  color: #a0998e;
+  color: #888;
 }
 
 .deleteButton:hover {
-  background: #fdf0ef;
+  background: #fff0ef;
   color: #e74c3c;
   border-color: #e74c3c;
 }
@@ -246,6 +253,112 @@
   cursor: not-allowed;
 }
 
+/* ─── Seção Carrossel ─── */
+.carouselSection {
+  margin-bottom: 3rem;
+  padding: 1.5rem;
+  background: #FFFFFF;
+  border-radius: 8px;
+  border: 1px solid #EAEAEA;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.carouselHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.carouselTitle {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #223727;
+  margin: 0;
+}
+
+.carouselUploadBtn {
+  padding: 0.5rem 1rem;
+  background-color: #223727;
+  color: white;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease;
+}
+
+.carouselUploadBtn:hover:not(:disabled) {
+  background-color: #4A6352;
+}
+
+.carouselUploadBtn:disabled {
+  background-color: #EAEAEA;
+  color: #888;
+  cursor: not-allowed;
+}
+
+.carouselHelp {
+  font-size: 0.9rem;
+  color: #888;
+  margin: 0 0 1.5rem 0;
+}
+
+.carouselEmpty {
+  color: #aaa;
+  font-style: italic;
+  margin: 0;
+}
+
+.carouselGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.carouselItem {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/9;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid #EAEAEA;
+}
+
+.carouselDeleteBtn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(231, 76, 60, 0.9);
+  color: white;
+  border: none;
+  padding: 6px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.carouselDeleteBtn:hover {
+  background: #c0392b;
+  transform: scale(1.1);
+}
+
+.sectionTitle {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #223727;
+  margin: 0 0 1rem 0;
+}
+
+/* ─── Mobile ─── */
 @media (max-width: 640px) {
   .tableHeader {
     display: none;
@@ -269,5 +382,9 @@
   .colActions {
     grid-row: span 2;
     align-self: center;
+  }
+
+  .main {
+    padding: 1.5rem 1rem;
   }
 }

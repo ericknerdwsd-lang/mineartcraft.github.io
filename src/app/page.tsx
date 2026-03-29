@@ -2,7 +2,7 @@ export const dynamic = "force-dynamic";
 import { prisma } from "@/lib/prisma";
 import ProductGrid from "@/components/ProductGrid";
 import styles from "./page.module.css";
-import { Product } from "@prisma/client";
+import { Product, Prisma } from "@prisma/client";
 import Link from "next/link";
 import Image from "next/image";
 import HeroCarousel from "@/components/HeroCarousel";
@@ -19,7 +19,7 @@ export default async function Home({
   let carouselImages: any[] = [];
 
   try {
-    const where: any = {};
+    const where: Prisma.ProductWhereInput = {};
     if (activeCategory) where.category = activeCategory;
     if (searchQuery) {
       where.name = { contains: searchQuery, mode: "insensitive" };
