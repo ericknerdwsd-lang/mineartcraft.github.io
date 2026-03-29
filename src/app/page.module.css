@@ -2,9 +2,6 @@
   padding: 1.5rem 0;
   background: #FFFFFF;
   border-bottom: 1px solid #EAEAEA;
-  position: sticky;
-  top: 0;
-  z-index: 100;
 }
 
 .headerContainer {
