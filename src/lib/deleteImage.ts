@@ -10,8 +10,8 @@ export async function deleteImageFromStorage(url: string): Promise<void> {
   if (!url) return;
 
   const blobToken =
-    process.env.BLOB_READ_WRITE_TOKEN ||
     process.env.Aamigurumi_READ_WRITE_TOKEN ||
+    process.env.BLOB_READ_WRITE_TOKEN ||
     process.env.amigurumi_READ_WRITE_TOKEN ||
     process.env.amegurumi_READ_WRITE_TOKEN;
 

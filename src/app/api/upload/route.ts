@@ -16,8 +16,8 @@ export async function POST(request: Request) {
     const isVercel = process.env.VERCEL === "1" || process.env.NODE_ENV === "production";
 
     // Buscar o token do Vercel Blob (pode ter prefixo se houver múltiplos stores)
-    const blobToken = process.env.BLOB_READ_WRITE_TOKEN || 
-                      process.env.Aamigurumi_READ_WRITE_TOKEN || 
+    const blobToken = process.env.Aamigurumi_READ_WRITE_TOKEN || 
+                      process.env.BLOB_READ_WRITE_TOKEN || 
                       process.env.amigurumi_READ_WRITE_TOKEN || 
                       process.env.amegurumi_READ_WRITE_TOKEN;
 
