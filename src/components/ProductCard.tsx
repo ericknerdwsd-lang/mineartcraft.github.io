@@ -45,14 +45,12 @@ export default function ProductCard({ product, onClick }: ProductCardProps) {
             </svg>
           </div>
         )}
-        <div className={styles.overlay}>
-          <span className={styles.viewText}>Ver detalhes</span>
-        </div>
       </div>
 
       <div className={styles.info}>
         <h3 className={styles.name}>{product.name}</h3>
         <p className={styles.price}>{formattedPrice}</p>
+        <button className={styles.actionButton}>Ver detalhes</button>
       </div>
     </div>
   );

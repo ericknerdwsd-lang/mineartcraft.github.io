@@ -36,43 +36,45 @@ export default async function Home({
   return (
     <>
       <header className={styles.header}>
-        <div className={styles.logoContainer}>
-          <Image 
-            src="/logo.png" 
-            alt="Logo" 
-            width={80} 
-            height={80} 
-            className={styles.headerLogo}
-          />
-          <div>
-            <h1 className={styles.logo}>Catálogo de Produtos</h1>
-            <p className={styles.tagline}>Feito à mão com amor</p>
+        <div className={styles.headerContainer}>
+          <div className={styles.logoContainer}>
+            <Image 
+              src="/logo.png" 
+              alt="Logo" 
+              width={80} 
+              height={80} 
+              className={styles.headerLogo}
+            />
+            <div>
+              <h1 className={styles.logo}>Catálogo de Produtos</h1>
+            </div>
           </div>
+          <nav className={styles.nav}>
+            {categories.map((cat) => (
+              <Link
+                key={cat.id}
+                href={cat.id ? `/?category=${cat.id}` : "/"}
+                className={`${styles.navItem} ${
+                  (activeCategory || "") === cat.id ? styles.navItemActive : ""
+                }`}
+              >
+                {cat.label}
+              </Link>
+            ))}
+          </nav>
         </div>
       </header>
 
-      <nav className={styles.nav}>
-        <div className={styles.navContainer}>
-          {categories.map((cat) => (
-            <Link
-              key={cat.id}
-              href={cat.id ? `/?category=${cat.id}` : "/"}
-              className={`${styles.navItem} ${
-                (activeCategory || "") === cat.id ? styles.navItemActive : ""
-              }`}
-            >
-              {cat.label}
-            </Link>
-          ))}
+      <section className={styles.hero}>
+        <div className={styles.heroOverlay}>
+          <div className={styles.heroContent}>
+            <h2 className={styles.heroTitle}>CRIAÇÕES FEITAS À MÃO</h2>
+            <p className={styles.heroSubtitle}>Qualidade e Charme em Cada Ponto</p>
+          </div>
         </div>
-      </nav>
+      </section>
 
       <main className={styles.main}>
-        <h2 className={styles.sectionTitle}>
-          {activeCategory 
-            ? categories.find(c => c.id === activeCategory)?.label 
-            : "Nossos Produtos"}
-        </h2>
         <ProductGrid
           products={products}
           whatsappNumber={WHATSAPP_NUMBER}
@@ -80,7 +82,28 @@ export default async function Home({
       </main>
 
       <footer className={styles.footer}>
-        <p>&copy; {new Date().getFullYear()} Catálogo. Todos os direitos reservados.</p>
+        <div className={styles.footerContainer}>
+          <div className={styles.footerSocial}>
+            <div className={styles.socialIcons}>
+              {/* Ícones placeholder simples */}
+              <span className={styles.socialIcon}>F</span>
+              <span className={styles.socialIcon}>T</span>
+              <span className={styles.socialIcon}>V</span>
+              <span className={styles.socialIcon}>I</span>
+            </div>
+            <p className={styles.socialText}>Siga-nos em nossas redes</p>
+          </div>
+          <div className={styles.footerNewsletter}>
+            <p className={styles.newsletterLabel}>Newsletter</p>
+            <p className={styles.newsletterSub}>Assine nosso contato</p>
+            <div className={styles.newsletterInputContainer}>
+              <input type="email" placeholder="E-mail de Notificação" className={styles.newsletterInput} />
+            </div>
+          </div>
+          <div className={styles.footerLinks}>
+            <Link href="#">Termos do Serviço</Link>
+          </div>
+        </div>
       </footer>
     </>
   );

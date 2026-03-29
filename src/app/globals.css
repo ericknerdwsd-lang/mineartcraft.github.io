@@ -1,11 +1,11 @@
 @import "tailwindcss";
 
 :root {
-  --background: #FDF5E6;
+  --background: #F7F5EE;
   --foreground: #2D3436;
-  --primary: #81C784;
-  --secondary: #C8E6C9;
-  --accent: #4E6E5D; /* Verde Musgo */
+  --primary: #4A6352;
+  --secondary: #E8E5DC;
+  --accent: #223727;
 }
 
 @theme inline {
