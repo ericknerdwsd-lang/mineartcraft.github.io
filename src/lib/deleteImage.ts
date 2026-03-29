@@ -23,15 +23,26 @@ export async function deleteImageFromStorage(url: string): Promise<void> {
     try {
       await del(url, { token: blobToken });
     } catch (e) {
-      console.error(`Erro ao remover do Vercel Blob: ${url}`, e);
+      console.error(`Erro ao remover do Vercel Blob: ${url}`, e instanceof Error ? e.message : "unknown");
     }
   } else if (url.startsWith("/uploads/")) {
-    const fileName = url.replace("/uploads/", "");
-    const filePath = path.join(process.cwd(), "public", "uploads", fileName);
+    // Extrair apenas o nome do arquivo (última parte após /)
+    const rawFilename = url.split("/").pop();
+    if (!rawFilename) return;
+
+    const uploadsDir = path.resolve(process.cwd(), "public", "uploads");
+    const filePath = path.resolve(uploadsDir, rawFilename);
+
+    // Path confinement: garantir que o caminho final está dentro de uploads/
+    if (!filePath.startsWith(uploadsDir + path.sep) && filePath !== uploadsDir) {
+      console.error(`[deleteImage] Tentativa de path traversal bloqueada: ${filePath}`);
+      return;
+    }
+
     try {
       await fs.unlink(filePath);
     } catch (e) {
-      console.error(`Erro ao remover arquivo local: ${filePath}`, e);
+      console.error(`Erro ao remover arquivo local: ${rawFilename}`, e instanceof Error ? e.message : "unknown");
     }
   }
 }

@@ -16,17 +16,16 @@ const createPrismaClient = () => {
   // Mas para o singleton funcionar e não quebrar imports, podemos tentar retornar o client de qualquer forma,
   // ou garantir que as variáveis de ambiente estejam no Vercel.
   
-  if (process.env.NODE_ENV === 'production' && !connectionString) {
-    console.warn('AVISO: DATABASE_URL não encontrada. O PrismaClient pode falhar na inicialização.');
+  if (process.env.NODE_ENV === 'production') {
+    throw new Error("DATABASE_URL é obrigatória em produção.");
   }
 
-  // Se não houver connectionString, o Prisma 7 exige que forneçamos algo ou ele lançará o erro observado no Vercel.
-  // Para permitir que o build prossiga sem quebrar em rotas que não usam o banco no momento do build:
+  // Build-time only: Prisma 7 exige uma URL mesmo durante o build.
+  // Este client nunca será executado em runtime sem DATABASE_URL.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return new PrismaClient({
-    // @ts-ignore - Forçando uma tentativa para evitar o erro de "opções vazias", 
-    // embora vá falhar se for realmente executado sem URL.
-    datasourceUrl: connectionString || "postgres://dummy", 
-  });
+    datasourceUrl: "postgresql://build:build@localhost:5432/build",
+  } as any);
 };
 
 const globalForPrisma = global as unknown as { 

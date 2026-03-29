@@ -44,3 +44,9 @@ next-env.d.ts
 
 .vercel
 .env*.local
+
+# secrets & test artifacts
+token.txt
+*.key
+*.secret
+test-image.*
