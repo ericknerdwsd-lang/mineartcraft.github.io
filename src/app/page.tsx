@@ -18,6 +18,8 @@ export default async function Home({
   let products: Product[] = [];
   let carouselImages: any[] = [];
 
+  let tags: { id: string; slug: string; label: string; bgColor: string; textColor: string }[] = [];
+
   try {
     const where: Prisma.ProductWhereInput = {};
     if (activeCategory) where.category = activeCategory;
@@ -37,15 +39,21 @@ export default async function Home({
     } catch (e) {
       console.error("Aviso: Tabela Carrossel ainda não sincronizada, fallback ativado.");
     }
+
+    try {
+      tags = await prisma.tag.findMany({
+        orderBy: { createdAt: "asc" },
+      });
+    } catch (e) {
+      console.error("Aviso: Tabela Tag ainda não sincronizada.");
+    }
   } catch (error) {
     console.error("Aviso: Conexão com o banco de dados falhou na Home. Verifique o arquivo .env");
   }
 
   const categories = [
     { id: "", label: "Todos" },
-    { id: "amigurumis", label: "Amigurumis" },
-    { id: "roupas", label: "Roupas" },
-    { id: "bolsas_acessorios", label: "Bolsas e Acessórios" },
+    ...tags.map((tag) => ({ id: tag.slug, label: tag.label })),
   ];
 
   return (
@@ -107,6 +115,7 @@ export default async function Home({
         <ProductGrid
           products={products}
           instagramUsername={INSTAGRAM_USERNAME}
+          tags={tags}
         />
       </main>
 

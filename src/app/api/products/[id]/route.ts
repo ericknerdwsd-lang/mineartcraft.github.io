@@ -56,8 +56,9 @@ export async function PUT(
       );
     }
 
-    const ALLOWED_CATEGORIES = ["amigurumis", "roupas", "bolsas_acessorios"];
-    const safeCategory = ALLOWED_CATEGORIES.includes(category) ? category : "amigurumis";
+    const tags = await prisma.tag.findMany({ select: { slug: true } });
+    const validCategorySlugs = tags.map((t) => t.slug);
+    const safeCategory = validCategorySlugs.includes(category) ? category : (validCategorySlugs[0] || "amigurumis");
 
     const safeImages = Array.isArray(images)
       ? images.slice(0, 4).filter((url: unknown) => typeof url === "string" && isAllowedImageUrl(url))

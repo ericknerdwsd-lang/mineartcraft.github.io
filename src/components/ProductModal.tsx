@@ -14,16 +14,26 @@ interface Product {
   category: string;
 }
 
+interface TagInfo {
+  id: string;
+  slug: string;
+  label: string;
+  bgColor: string;
+  textColor: string;
+}
+
 interface ProductModalProps {
   product: Product;
   onClose: () => void;
   instagramUsername: string;
+  tagInfo?: TagInfo;
 }
 
 export default function ProductModal({
   product,
   onClose,
   instagramUsername,
+  tagInfo,
 }: ProductModalProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [prevImageIndex, setPrevImageIndex] = useState<number | null>(null);
@@ -53,11 +63,7 @@ export default function ProductModal({
     setCurrentImageIndex((prev) => prev - 1);
   };
 
-  const categoryLabels: Record<string, string> = {
-    amigurumis: "Amigurumis",
-    roupas: "Roupas",
-    bolsas_acessorios: "Bolsas e Acessórios"
-  };
+
 
   const instagramLink = `https://www.instagram.com/${instagramUsername}/`;
 
@@ -150,13 +156,11 @@ export default function ProductModal({
           </div>
 
           <div className={styles.details}>
-            <span className={`
-              ${styles.categoryBadge} 
-              ${product.category === 'amigurumis' ? styles.categoryAmigurumi : ""}
-              ${product.category === 'roupas' ? styles.categoryRoupa : ""}
-              ${product.category === 'bolsas_acessorios' ? styles.categoryBolsa : ""}
-            `}>
-              {categoryLabels[product.category] || product.category}
+            <span 
+              className={styles.categoryBadge}
+              style={tagInfo ? { backgroundColor: tagInfo.bgColor, color: tagInfo.textColor } : undefined}
+            >
+              {tagInfo ? tagInfo.label : product.category}
             </span>
             <h2 className={styles.name}>{product.name}</h2>
             <p className={styles.price}>{formattedPrice}</p>

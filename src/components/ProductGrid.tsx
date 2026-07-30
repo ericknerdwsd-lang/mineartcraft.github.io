@@ -14,13 +14,28 @@ interface Product {
   category: string;
 }
 
+interface TagInfo {
+  id: string;
+  slug: string;
+  label: string;
+  bgColor: string;
+  textColor: string;
+}
+
 interface ProductGridProps {
   products: Product[];
   instagramUsername: string;
+  tags?: TagInfo[];
 }
 
-export default function ProductGrid({ products, instagramUsername }: ProductGridProps) {
+export default function ProductGrid({ products, instagramUsername, tags = [] }: ProductGridProps) {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+
+  // Build a lookup map from tags
+  const tagMap: Record<string, TagInfo> = {};
+  tags.forEach((tag) => {
+    tagMap[tag.slug] = tag;
+  });
 
   return (
     <>
@@ -40,6 +55,7 @@ export default function ProductGrid({ products, instagramUsername }: ProductGrid
               key={product.id}
               product={product}
               onClick={setSelectedProduct}
+              tagInfo={tagMap[product.category]}
             />
           ))}
         </div>
@@ -50,6 +66,7 @@ export default function ProductGrid({ products, instagramUsername }: ProductGrid
           product={selectedProduct}
           onClose={() => setSelectedProduct(null)}
           instagramUsername={instagramUsername}
+          tagInfo={tagMap[selectedProduct.category]}
         />
       )}
     </>

@@ -358,6 +358,324 @@
   margin: 0 0 1rem 0;
 }
 
+/* ─── Seção de Tags ─── */
+.tagSection {
+  margin-bottom: 3rem;
+  padding: 1.5rem;
+  background: #FFFFFF;
+  border-radius: 8px;
+  border: 1px solid #EAEAEA;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.tagSectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.tagTitleGroup {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.tagIcon {
+  color: #4A6352;
+}
+
+.tagSectionTitle {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #223727;
+  margin: 0;
+}
+
+.tagAddBtn {
+  padding: 0.5rem 1rem;
+  background-color: #223727;
+  color: white;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease;
+}
+
+.tagAddBtn:hover {
+  background-color: #4A6352;
+}
+
+.tagHelp {
+  font-size: 0.9rem;
+  color: #888;
+  margin: 0 0 1rem 0;
+}
+
+.tagEmpty {
+  color: #aaa;
+  font-style: italic;
+  margin: 0;
+}
+
+/* ─── Tag Form ─── */
+.tagForm {
+  background: #F9F7F2;
+  border: 1px solid #EAEAEA;
+  border-radius: 8px;
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+  animation: fadeInTag 0.25s ease-out;
+}
+
+@keyframes fadeInTag {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.tagFormRow {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.tagFormField {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  flex: 1;
+  min-width: 120px;
+}
+
+.tagFormLabel {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #4A6352;
+}
+
+.tagFormInput {
+  padding: 8px 12px;
+  border: 1px solid #EAEAEA;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  background: #FFFFFF;
+  color: #223727;
+  font-family: inherit;
+}
+
+.tagFormInput:focus {
+  border-color: #4A6352;
+  box-shadow: 0 0 0 3px rgba(74, 99, 82, 0.1);
+}
+
+/* ─── Color Picker ─── */
+.colorPickerGroup {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.colorPicker {
+  width: 36px;
+  height: 36px;
+  border: 2px solid #EAEAEA;
+  border-radius: 6px;
+  cursor: pointer;
+  padding: 2px;
+  background: #FFFFFF;
+  transition: border-color 0.2s ease;
+}
+
+.colorPicker:hover {
+  border-color: #4A6352;
+}
+
+.colorHex {
+  font-size: 0.8rem;
+  color: #888;
+  font-family: monospace;
+}
+
+/* ─── Tag Preview ─── */
+.tagPreview {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 20px;
+  white-space: nowrap;
+  margin-top: 2px;
+}
+
+.tagFormActions {
+  display: flex;
+  gap: 0.75rem;
+  padding-top: 0.25rem;
+}
+
+.tagSaveBtn {
+  padding: 8px 20px;
+  background-color: #223727;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.tagSaveBtn:hover:not(:disabled) {
+  background-color: #4A6352;
+}
+
+.tagSaveBtn:disabled {
+  background-color: #EAEAEA;
+  color: #888;
+  cursor: not-allowed;
+}
+
+.tagCancelBtn {
+  padding: 8px 20px;
+  background: transparent;
+  color: #888;
+  border: 1px solid #EAEAEA;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tagCancelBtn:hover {
+  border-color: #e74c3c;
+  color: #e74c3c;
+  background: #fff0ef;
+}
+
+/* ─── Tag List ─── */
+.tagList {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.tagItem {
+  border-bottom: 1px solid #F0EEE8;
+  transition: background 0.15s ease;
+}
+
+.tagItem:last-child {
+  border-bottom: none;
+}
+
+.tagItem:hover {
+  background: #FDFCF9;
+}
+
+/* ─── Tag Display (View Mode) ─── */
+.tagDisplay {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+}
+
+.tagInfo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.tagBadge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+.tagSlug {
+  font-size: 0.8rem;
+  color: #aaa;
+  font-family: monospace;
+}
+
+.tagActions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* ─── Tag Edit (Inline) ─── */
+.tagEditForm {
+  padding: 1rem 0;
+}
+
+.tagEditRow {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+}
+
+.tagEditActions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.tagConfirmBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  border: 1px solid #4A6352;
+  background: #F0F7F1;
+  color: #4A6352;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tagConfirmBtn:hover {
+  background: #223727;
+  color: white;
+}
+
+.tagCancelIconBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  border: 1px solid #EAEAEA;
+  background: transparent;
+  color: #888;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tagCancelIconBtn:hover {
+  background: #fff0ef;
+  color: #e74c3c;
+  border-color: #e74c3c;
+}
+
 /* ─── Mobile ─── */
 @media (max-width: 640px) {
   .tableHeader {
@@ -387,4 +705,22 @@
   .main {
     padding: 1.5rem 1rem;
   }
+
+  .tagFormRow,
+  .tagEditRow {
+    flex-direction: column;
+  }
+
+  .tagSectionHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .tagDisplay {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
 }
+

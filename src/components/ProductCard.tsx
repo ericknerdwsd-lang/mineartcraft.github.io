@@ -12,31 +12,36 @@ interface Product {
   category: string;
 }
 
+interface TagInfo {
+  id: string;
+  slug: string;
+  label: string;
+  bgColor: string;
+  textColor: string;
+}
+
 interface ProductCardProps {
   product: Product;
   onClick: (product: Product) => void;
+  tagInfo?: TagInfo;
 }
 
-const categoryTags: Record<string, { label: string, colorClass: string }> = {
-  amigurumis: { label: "Amigurumis", colorClass: styles.tagAmigurumi },
-  roupas: { label: "Roupas", colorClass: styles.tagRoupa },
-  bolsas_acessorios: { label: "Bolsas e Acessórios", colorClass: styles.tagBolsa }
-};
-
-export default function ProductCard({ product, onClick }: ProductCardProps) {
+export default function ProductCard({ product, onClick, tagInfo }: ProductCardProps) {
   const formattedPrice = new Intl.NumberFormat("pt-BR", {
     style: "currency",
     currency: "BRL",
   }).format(product.price);
 
   const mainImage = product.images?.[0];
-  const tagInfo = product.category ? categoryTags[product.category] : null;
 
   return (
     <div className={styles.card} onClick={() => onClick(product)}>
       <div className={styles.imageWrapper}>
         {tagInfo && (
-           <span className={`${styles.tag} ${tagInfo.colorClass}`}>
+           <span 
+             className={styles.tag}
+             style={{ backgroundColor: tagInfo.bgColor, color: tagInfo.textColor }}
+           >
              {tagInfo.label}
            </span>
         )}

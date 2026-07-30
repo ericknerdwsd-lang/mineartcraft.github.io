@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import { Plus, Pencil, Trash2, LogOut, UploadCloud } from "lucide-react";
+import { Plus, Pencil, Trash2, LogOut, UploadCloud, Tag, Check, X } from "lucide-react";
 import styles from "./gestor.module.css";
 
 interface Product {
@@ -25,19 +25,43 @@ interface CarouselImage {
   order: number;
 }
 
+interface TagItem {
+  id: string;
+  slug: string;
+  label: string;
+  bgColor: string;
+  textColor: string;
+}
+
 export default function AdminDashboard() {
   const [products, setProducts] = useState<Product[]>([]);
   const [carouselImages, setCarouselImages] = useState<CarouselImage[]>([]);
+  const [tags, setTags] = useState<TagItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [loadingCarousel, setLoadingCarousel] = useState(true);
+  const [loadingTags, setLoadingTags] = useState(true);
   const [deleting, setDeleting] = useState<string | null>(null);
   const [uploadingBg, setUploadingBg] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
+  // Tag form state
+  const [showTagForm, setShowTagForm] = useState(false);
+  const [tagLabel, setTagLabel] = useState("");
+  const [tagBgColor, setTagBgColor] = useState("#E8D5F5");
+  const [tagTextColor, setTagTextColor] = useState("#7B2D9E");
+  const [savingTag, setSavingTag] = useState(false);
+
+  // Tag edit state
+  const [editingTag, setEditingTag] = useState<string | null>(null);
+  const [editLabel, setEditLabel] = useState("");
+  const [editBgColor, setEditBgColor] = useState("");
+  const [editTextColor, setEditTextColor] = useState("");
+
   useEffect(() => {
     fetchProducts();
     fetchCarousel();
+    fetchTags();
   }, []);
 
   const fetchProducts = async () => {
@@ -71,6 +95,20 @@ export default function AdminDashboard() {
       console.error("Erro ao buscar carrossel:", error);
     } finally {
       setLoadingCarousel(false);
+    }
+  };
+
+  const fetchTags = async () => {
+    try {
+      const res = await fetch("/api/tags");
+      const data = await res.json();
+      if (Array.isArray(data)) {
+        setTags(data);
+      }
+    } catch (error) {
+      console.error("Erro ao buscar tags:", error);
+    } finally {
+      setLoadingTags(false);
     }
   };
 
@@ -142,6 +180,97 @@ export default function AdminDashboard() {
       }
     } catch (error) {
       console.error("Erro ao remover do carrossel:", error);
+    }
+  };
+
+  // ─── Tag Handlers ───
+
+  const handleCreateTag = async () => {
+    if (!tagLabel.trim()) return;
+    setSavingTag(true);
+    
+    // Auto generate slug from label
+    const generatedSlug = tagLabel.toLowerCase().replace(/\s+/g, "_").replace(/[^a-z0-9_]/g, "");
+
+    try {
+      const res = await fetch("/api/tags", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          slug: generatedSlug,
+          label: tagLabel,
+          bgColor: tagBgColor,
+          textColor: tagTextColor,
+        }),
+      });
+
+      if (res.ok) {
+        const newTag = await res.json();
+        setTags([...tags, newTag]);
+        setTagLabel("");
+        setTagBgColor("#E8D5F5");
+        setTagTextColor("#7B2D9E");
+        setShowTagForm(false);
+      } else {
+        const data = await res.json();
+        alert(data.error || "Erro ao criar tag.");
+      }
+    } catch (error) {
+      console.error("Erro ao criar tag:", error);
+      alert("Erro de conexão.");
+    } finally {
+      setSavingTag(false);
+    }
+  };
+
+  const startEditTag = (tag: TagItem) => {
+    setEditingTag(tag.id);
+    setEditLabel(tag.label);
+    setEditBgColor(tag.bgColor);
+    setEditTextColor(tag.textColor);
+  };
+
+  const cancelEditTag = () => {
+    setEditingTag(null);
+    setEditLabel("");
+    setEditBgColor("");
+    setEditTextColor("");
+  };
+
+  const handleUpdateTag = async (id: string) => {
+    if (!editLabel.trim()) return;
+    try {
+      const res = await fetch(`/api/tags/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          label: editLabel,
+          bgColor: editBgColor,
+          textColor: editTextColor,
+        }),
+      });
+
+      if (res.ok) {
+        const updated = await res.json();
+        setTags(tags.map((t) => (t.id === id ? updated : t)));
+        cancelEditTag();
+      } else {
+        alert("Erro ao atualizar tag.");
+      }
+    } catch (error) {
+      console.error("Erro ao atualizar tag:", error);
+    }
+  };
+
+  const handleDeleteTag = async (id: string) => {
+    if (!confirm("Tem certeza que deseja excluir esta tag?")) return;
+    try {
+      const res = await fetch(`/api/tags/${id}`, { method: "DELETE" });
+      if (res.ok) {
+        setTags(tags.filter((t) => t.id !== id));
+      }
+    } catch (error) {
+      console.error("Erro ao excluir tag:", error);
     }
   };
 
@@ -217,6 +346,202 @@ export default function AdminDashboard() {
                   >
                     <Trash2 size={14} />
                   </button>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* ─── Seção de Tags ─── */}
+        <div className={styles.tagSection}>
+          <div className={styles.tagSectionHeader}>
+            <div className={styles.tagTitleGroup}>
+              <Tag size={20} className={styles.tagIcon} />
+              <h2 className={styles.tagSectionTitle}>Tags / Categorias</h2>
+            </div>
+            <button
+              onClick={() => setShowTagForm(!showTagForm)}
+              className={styles.tagAddBtn}
+            >
+              <Plus size={18} />
+              Nova Tag
+            </button>
+          </div>
+
+          <p className={styles.tagHelp}>
+            Gerencie as categorias que aparecem nos produtos e nos filtros do catálogo.
+          </p>
+
+          {/* Formulário para nova tag */}
+          {showTagForm && (
+            <div className={styles.tagForm}>
+              <div className={styles.tagFormRow}>
+                <div className={styles.tagFormField}>
+                  <label className={styles.tagFormLabel}>Nome de exibição</label>
+                  <input
+                    type="text"
+                    value={tagLabel}
+                    onChange={(e) => setTagLabel(e.target.value)}
+                    placeholder="ex: Decoração"
+                    className={styles.tagFormInput}
+                  />
+                </div>
+              </div>
+              <div className={styles.tagFormRow}>
+                <div className={styles.tagFormField}>
+                  <label className={styles.tagFormLabel}>Cor de fundo</label>
+                  <div className={styles.colorPickerGroup}>
+                    <input
+                      type="color"
+                      value={tagBgColor}
+                      onChange={(e) => setTagBgColor(e.target.value)}
+                      className={styles.colorPicker}
+                    />
+                    <span className={styles.colorHex}>{tagBgColor}</span>
+                  </div>
+                </div>
+                <div className={styles.tagFormField}>
+                  <label className={styles.tagFormLabel}>Cor do texto</label>
+                  <div className={styles.colorPickerGroup}>
+                    <input
+                      type="color"
+                      value={tagTextColor}
+                      onChange={(e) => setTagTextColor(e.target.value)}
+                      className={styles.colorPicker}
+                    />
+                    <span className={styles.colorHex}>{tagTextColor}</span>
+                  </div>
+                </div>
+                <div className={styles.tagFormField}>
+                  <label className={styles.tagFormLabel}>Preview</label>
+                  <span
+                    className={styles.tagPreview}
+                    style={{ backgroundColor: tagBgColor, color: tagTextColor }}
+                  >
+                    {tagLabel || "Exemplo"}
+                  </span>
+                </div>
+              </div>
+              <div className={styles.tagFormActions}>
+                <button
+                  onClick={handleCreateTag}
+                  disabled={savingTag || !tagLabel.trim()}
+                  className={styles.tagSaveBtn}
+                >
+                  {savingTag ? "Salvando..." : "Criar Tag"}
+                </button>
+                <button
+                  onClick={() => setShowTagForm(false)}
+                  className={styles.tagCancelBtn}
+                >
+                  Cancelar
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Lista de tags existentes */}
+          {loadingTags ? (
+            <p className={styles.tagHelp}>Carregando tags...</p>
+          ) : tags.length === 0 ? (
+            <p className={styles.tagEmpty}>Nenhuma tag cadastrada. Adicione sua primeira tag!</p>
+          ) : (
+            <div className={styles.tagList}>
+              {tags.map((tag) => (
+                <div key={tag.id} className={styles.tagItem}>
+                  {editingTag === tag.id ? (
+                    /* ─── Modo de edição ─── */
+                    <div className={styles.tagEditForm}>
+                      <div className={styles.tagEditRow}>
+                        <div className={styles.tagFormField}>
+                          <label className={styles.tagFormLabel}>Nome</label>
+                          <input
+                            type="text"
+                            value={editLabel}
+                            onChange={(e) => setEditLabel(e.target.value)}
+                            className={styles.tagFormInput}
+                          />
+                        </div>
+                        <div className={styles.tagFormField}>
+                          <label className={styles.tagFormLabel}>Cor de fundo</label>
+                          <div className={styles.colorPickerGroup}>
+                            <input
+                              type="color"
+                              value={editBgColor}
+                              onChange={(e) => setEditBgColor(e.target.value)}
+                              className={styles.colorPicker}
+                            />
+                            <span className={styles.colorHex}>{editBgColor}</span>
+                          </div>
+                        </div>
+                        <div className={styles.tagFormField}>
+                          <label className={styles.tagFormLabel}>Cor do texto</label>
+                          <div className={styles.colorPickerGroup}>
+                            <input
+                              type="color"
+                              value={editTextColor}
+                              onChange={(e) => setEditTextColor(e.target.value)}
+                              className={styles.colorPicker}
+                            />
+                            <span className={styles.colorHex}>{editTextColor}</span>
+                          </div>
+                        </div>
+                        <div className={styles.tagFormField}>
+                          <label className={styles.tagFormLabel}>Preview</label>
+                          <span
+                            className={styles.tagPreview}
+                            style={{ backgroundColor: editBgColor, color: editTextColor }}
+                          >
+                            {editLabel || "Exemplo"}
+                          </span>
+                        </div>
+                      </div>
+                      <div className={styles.tagEditActions}>
+                        <button
+                          onClick={() => handleUpdateTag(tag.id)}
+                          className={styles.tagConfirmBtn}
+                          title="Salvar"
+                        >
+                          <Check size={16} />
+                        </button>
+                        <button
+                          onClick={cancelEditTag}
+                          className={styles.tagCancelIconBtn}
+                          title="Cancelar"
+                        >
+                          <X size={16} />
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    /* ─── Modo de visualização ─── */
+                    <div className={styles.tagDisplay}>
+                      <div className={styles.tagInfo}>
+                        <span
+                          className={styles.tagBadge}
+                          style={{ backgroundColor: tag.bgColor, color: tag.textColor }}
+                        >
+                          {tag.label}
+                        </span>
+                      </div>
+                      <div className={styles.tagActions}>
+                        <button
+                          onClick={() => startEditTag(tag)}
+                          className={styles.editButton}
+                          title="Editar tag"
+                        >
+                          <Pencil size={16} />
+                        </button>
+                        <button
+                          onClick={() => handleDeleteTag(tag.id)}
+                          className={styles.deleteButton}
+                          title="Excluir tag"
+                        >
+                          <Trash2 size={16} />
+                        </button>
+                      </div>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>

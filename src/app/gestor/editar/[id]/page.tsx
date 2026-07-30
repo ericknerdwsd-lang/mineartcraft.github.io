@@ -7,6 +7,12 @@ import Link from "next/link";
 import { ArrowLeft, Upload, X } from "lucide-react";
 import styles from "../../form.module.css";
 
+interface TagOption {
+  id: string;
+  slug: string;
+  label: string;
+}
+
 export default function EditarProduct() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -18,6 +24,7 @@ export default function EditarProduct() {
   const [uploading, setUploading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [availableTags, setAvailableTags] = useState<TagOption[]>([]);
   const [error, setError] = useState("");
   const fileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
@@ -47,6 +54,15 @@ export default function EditarProduct() {
       }
     };
     fetchProduct();
+
+    fetch("/api/tags")
+      .then((res) => res.json())
+      .then((data) => {
+        if (Array.isArray(data)) {
+          setAvailableTags(data);
+        }
+      })
+      .catch((err) => console.error("Erro ao buscar tags:", err));
   }, [params.id]);
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -201,9 +217,14 @@ export default function EditarProduct() {
               className={styles.input}
               required
             >
-              <option value="amigurumis">Amigurumis</option>
-              <option value="roupas">Roupas</option>
-              <option value="bolsas_acessorios">Bolsas e Acessórios</option>
+              {availableTags.length === 0 && (
+                <option value="">Carregando categorias...</option>
+              )}
+              {availableTags.map((tag) => (
+                <option key={tag.id} value={tag.slug}>
+                  {tag.label}
+                </option>
+              ))}
             </select>
           </div>
 
